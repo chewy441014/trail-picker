@@ -25,3 +25,8 @@ li {
 .card-image {
     min-height: 100%;
 }
+
+#search-bar{
+    width: 75%
+
+}
