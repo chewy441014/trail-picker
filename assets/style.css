@@ -6,6 +6,7 @@ body {
 
 section {
     height: 100%;
+    
 }
 
 li {
@@ -14,8 +15,14 @@ li {
     padding: 5px;
 }
 
-.card {
-    min-height: 100%;
+.card[data-clickable=true]{
+    cursor: pointer;
+  }
+
+.container {
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .active-border {
