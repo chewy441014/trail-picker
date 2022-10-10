@@ -1,3 +1,9 @@
+// initialize global variables
+var weatherData;
+var parkData;
+var routeData;
+var searchArr = [weatherData, parkData, routeData];
+
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
 // Sample request https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
 
@@ -35,6 +41,7 @@ function getForecast() {
         console.log(response.data[0].vis) //visibility
         console.log(response.data[0].ozone)
         console.log(response.data[0].sunrise_ts)
+        weatherData = response;
         // and more
     })
 }
@@ -74,6 +81,7 @@ function findParksRelatedTo() {
         method: 'GET',
     }).then(function (response) {
         console.log(response.data[0].parks);
+        parkData = response;
     })
 }
 
@@ -94,9 +102,11 @@ function getDirections() {
         url: requestUrl,
         method: 'GET',
     }).then(function (response) {
-        console.log(response);
+        // console.log(response);
+        routeData = response;
+        displayMap(startingPoint, endPoint);
     })
-    displayMap(startingPoint, endPoint);
+    
 }
 
 function displayMap(startPoint, endPoint) {
