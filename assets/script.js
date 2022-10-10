@@ -43,7 +43,7 @@ function getForecast() {
 // THIS API IS CURRENTLY IN DEVELOPMENT maybe we can contribute to it sometime
 // Preston's API Key VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG
 
-function findParksRelatedTo () {
+function findParksRelatedTo() {
     var searchTerm = "hiking"; // insert user submitted text once we have the DOM element
     var requestUrl = 'https://developer.nps.gov/api/v1/activities/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
     // get the parks related to the search term gives parkCode fairly limited
@@ -77,10 +77,107 @@ function findParksRelatedTo () {
     })
 }
 
-// Google Maps API
-// It could cost money...
+
+
+// MapQuest API
+// example https://www.mapquestapi.com/directions/v2/route?key=KEY&from=Clarendon Blvd,Arlington,VA&to=2400+S+Glebe+Rd,+Arlington,+VA
+// another example https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=KEY
+// MapQuest route API gives distance as well as some other stuff
+// Michael's API key Q87JNminvctmB5QAimcXQlzSf33AmhqY
+function getDirections() {
+    var startingPoint = "Houston, TX"; // insert user generated starting point
+    var endPoint = "El Paso, TX"; // insert user generated end point
+    //var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=' + startingPoint + '&end='+ endPoint + '&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+    var requestUrl = 'https://www.mapquestapi.com/directions/v2/route?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&from=' + startingPoint + '&to=' + endPoint;
+    // var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+    $.ajax({
+        url: requestUrl,
+        method: 'GET',
+    }).then(function (response) {
+        console.log(response);
+    })
+    displayMap(startingPoint, endPoint);
+}
+
+function displayMap(startPoint, endPoint) {
+    L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+
+    // 'map' refers to a <div> element with the ID map
+    L.mapquest.map('map', {
+        center: [37.7749, -122.4194],
+        layers: L.mapquest.tileLayer('map'),
+        zoom: 12
+    });
+
+    var directions = L.mapquest.directions();
+    directions.route({
+        start: startPoint,
+        end: endPoint
+    });
+}
+
 // var dropdown = document.querySelector('.dropdown');
 // dropdown.addEventListener('click', function(event) {
 //   event.stopPropagation();
 //   dropdown.classList.toggle('is-active');
 // });
+
+
+
+
+
+
+// Landing Page Button Functionality
+// Local storage data for recent searches is going to be pulled from local storage and rendered on user click.
+
+function recentSearch(index){
+    var recentData = JSON.parse(localStorage.getItem('searchData'));
+
+}
+
+// JS for Location Modal (Credit to Bulma docs example)
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Functions to open and close a modal
+    function openModal($el) {
+      $el.classList.add('is-active');
+    }
+  
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
+  
+    function closeAllModals() {
+      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+      });
+    }
+  
+    // Add a click event on buttons to open a specific modal
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+  
+      $trigger.addEventListener('click', () => {
+        openModal($target);
+      });
+    });
+  
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+      const $target = $close.closest('.modal');
+  
+      $close.addEventListener('click', () => {
+        closeModal($target);
+      });
+    });
+  
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+      const e = event || window.event;
+  
+      if (e.keyCode === 27) { // Escape key
+        closeAllModals();
+      }
+    });
+  });
