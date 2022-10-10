@@ -145,3 +145,75 @@ function recentSearch(index){
 
 }
 
+// JS for Location Modal (Credit to Bulma docs example)
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Functions to open and close a modal
+    function openModal($el) {
+      $el.classList.add('is-active');
+    }
+  
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
+  
+    function closeAllModals() {
+      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+      });
+    }
+  
+    // Add a click event on buttons to open a specific modal
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+      const modal = $trigger.dataset.target;
+      const $target = document.getElementById(modal);
+  
+      $trigger.addEventListener('click', () => {
+        openModal($target);
+      });
+    });
+  
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+      const $target = $close.closest('.modal');
+  
+      $close.addEventListener('click', () => {
+        closeModal($target);
+      });
+    });
+  
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+      const e = event || window.event;
+  
+      if (e.keyCode === 27) { // Escape key
+        closeAllModals();
+      }
+    });
+  });
+
+//Michael results Page 
+function displayResults(searchResults) {
+  var resultsColumn = $('#results-column');
+    for (i=0; i < 5; i++) {
+
+  var resultItemCard = $('<div>').addClass('card active-border block')
+  .attr({
+    data: clickable,
+    id: i
+    });
+  var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text("park name from api");
+  var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text('park state from api');
+  var parkDescription = $('<p>').addClass('ml-2').text("park desc from api");
+  var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + 'mi from API' );
+
+  resultsColumn.append(resultItemCard);
+  resultItemCard.append(
+      parkName,
+      parkState,
+      parkDescription,
+      parkDistance
+  );
+
+};
+}

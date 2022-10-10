@@ -12,7 +12,6 @@ section {
 li {
     display: inline;
     list-style: none;
-    padding: 5px;
 }
 
 .card[data-clickable=true]{
@@ -21,8 +20,6 @@ li {
 
 .container {
     max-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .active-border {
