@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="has-background-dark">
     <head>
         <meta charset="utf-8">
         <title>Trail Picker</title>
@@ -9,17 +9,64 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
         <link rel="stylesheet" href="./assets/style.css">
     </head>
-    <body>
-        
+    <body class="is-flex is-flex-direction-column is-align-items-center">
+
+        <div class="section is-medium is-flex has-flex-direction-column has-background-primary mt-6" id="search-bar">
+            
+            <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                    <span>Filters</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+
+                <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            Remember me
+                          </label>
+                    </div>
+                   
+                    <div class="dropdown-item">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            Remember me
+                          </label>
+                    </div>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            <input class="input is-info" type="text" placeholder="Info input">
+            
 
 
 
+        </div>
+
+        <div class="section is-small is-flex is-justify-content-center is-align-items-center has-background-danger">
+            <button class="column is-one-third has-background-info mx-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sem dui, dapibus quis pharetra sit amet, finibus in justo. Cras et auctor sem, eu vehicula ante. Aenean mollis varius eros ac auctor. Vivamus eget sollicitudin lectus. Nam cursus congue est in viverra. Integer sollicitudin lacus vel augue blandit consectetur. Sed feugiat posuere arcu et mollis. In velit ex, faucibus vitae purus vitae, eleifend faucibus diam. Nam vitae nisi hendrerit, convallis tortor sit amet, molestie nibh. Vestibulum eget euismod magna. Phasellus mauris tellus, aliquet dictum venenatis pulvinar, ornare et libero. Sed et hendrerit mauris, sit amet fermentum ante. Nam leo odio, aliquam sit amet lobortis varius, placerat vitae nibh. Pellentesque velit odio, gravida vitae mauris a, iaculis efficitur urna. Vivamus vestibulum scelerisque justo. Nam vitae dictum lectus.
+            </button>
+            <button class="column is-one-third has-background-info mx-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sem dui, dapibus quis pharetra sit amet, finibus in justo. Cras et auctor sem, eu vehicula ante. Aenean mollis varius eros ac auctor. Vivamus eget sollicitudin lectus. Nam cursus congue est in viverra. Integer sollicitudin lacus vel augue blandit consectetur. Sed feugiat posuere arcu et mollis. In velit ex, faucibus vitae purus vitae, eleifend faucibus diam. Nam vitae nisi hendrerit, convallis tortor sit amet, molestie nibh. Vestibulum eget euismod magna. Phasellus mauris tellus, aliquet dictum venenatis pulvinar, ornare et libero. Sed et hendrerit mauris, sit amet fermentum ante. Nam leo odio, aliquam sit amet lobortis varius, placerat vitae nibh. Pellentesque velit odio, gravida vitae mauris a, iaculis efficitur urna. Vivamus vestibulum scelerisque justo. Nam vitae dictum lectus.              </button>
+            <button class="column is-one-third has-background-info mx-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sem dui, dapibus quis pharetra sit amet, finibus in justo. Cras et auctor sem, eu vehicula ante. Aenean mollis varius eros ac auctor. Vivamus eget sollicitudin lectus. Nam cursus congue est in viverra. Integer sollicitudin lacus vel augue blandit consectetur. Sed feugiat posuere arcu et mollis. In velit ex, faucibus vitae purus vitae, eleifend faucibus diam. Nam vitae nisi hendrerit, convallis tortor sit amet, molestie nibh. Vestibulum eget euismod magna. Phasellus mauris tellus, aliquet dictum venenatis pulvinar, ornare et libero. Sed et hendrerit mauris, sit amet fermentum ante. Nam leo odio, aliquam sit amet lobortis varius, placerat vitae nibh. Pellentesque velit odio, gravida vitae mauris a, iaculis efficitur urna. Vivamus vestibulum scelerisque justo. Nam vitae dictum lectus.              </div>
+            </button>
+          
 
 
 
 
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
         <script src="./assets/bulmajs/BulmaJS-0.12.2/dist/bulma.js"></script>
+        
         <script src="./assets/script.js"></script>
     </body>
 </html>
