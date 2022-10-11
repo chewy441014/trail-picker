@@ -83,8 +83,10 @@ function findParksRelatedTo() {
         console.log(response);
         
         parkData = response;
-        displayResults();
+        
         sortParkData(response);
+
+        displayResults();
         // console.log(parkData[0].data[0].fullName);
     })
 }
@@ -147,7 +149,7 @@ function getDistance(start, end) {
     var deltaPhi = (start[0] - end[0]) * Math.PI / 180; // convert deltaPhi to radian, diff in lat
     var deltaLambda = (start[1] - end[1]) * Math.PI / 180; // convert deltaLambda to radian, diff in lon
     var meanLat = (start[0] + end[0]) / 2 * Math.PI / 180; // convert mean lat to radian
-    return earthRadius * Math.sqrt(Math.pow(deltaPhi,2) + Math.pow(Math.cos(meanLat) * deltaLambda,2));
+    return Math.round(earthRadius * Math.sqrt(Math.pow(deltaPhi,2) + Math.pow(Math.cos(meanLat) * deltaLambda,2)));
 }
 
 
@@ -236,7 +238,7 @@ function displayResults() {
   var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
   var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
   var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
-  var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + 'mi from API' );
+  var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi' );
 
   resultsColumn.append(resultItemCard);
   resultItemCard.append(
