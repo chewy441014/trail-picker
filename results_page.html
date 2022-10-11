@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Parks List</title>
+    <link rel="stylesheet" href="./assets/reset.css">
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/style.css">
     <style>body { background-image: url("./assets/images/5D08A7E6-155D-451F-67E900607CDE1EADOriginal.jpg")}</style>
@@ -21,7 +23,20 @@
           <button class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <!-- Content ... -->
+            <div class="columns">
+            <div class="column">
+              Weather Data
+            </div>
+            <div class="column" id="map">
+              
+            </div>
+          </div>
+          <div>
+            Weather Data
+          Temperature
+          Humidity
+          Visibility
+          </div>
         </section>
         <footer class="modal-card-foot">
           <button class="button is-success">Save changes</button>
@@ -50,6 +65,7 @@
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
 <script src="./assets/bulma.js"></script>
 <script src="./assets/script.js"></script>
 
