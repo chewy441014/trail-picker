@@ -81,7 +81,11 @@ function findParksRelatedTo() {
         method: 'GET',
     }).then(function (response) {
         console.log(response);
+        
         parkData = response;
+        
+        sortParkData(response);
+
         displayResults();
         // console.log(parkData[0].data[0].fullName);
     })
@@ -134,9 +138,40 @@ function displayMap(startPoint, endPoint) {
 //   dropdown.classList.toggle('is-active');
 // });
 
+// Function to get the geographical distance between two points (lat, lon)
+// https://en.wikipedia.org/wiki/Geographical_distance
+// start = [lat, lon]
+// end = [lat, lon]
+// var distance = getDistance(start, end);
+
+function getDistance(start, end) {
+    var earthRadius = 3958.761;
+    var deltaPhi = (start[0] - end[0]) * Math.PI / 180; // convert deltaPhi to radian, diff in lat
+    var deltaLambda = (start[1] - end[1]) * Math.PI / 180; // convert deltaLambda to radian, diff in lon
+    var meanLat = (start[0] + end[0]) / 2 * Math.PI / 180; // convert mean lat to radian
+    return Math.round(earthRadius * Math.sqrt(Math.pow(deltaPhi,2) + Math.pow(Math.cos(meanLat) * deltaLambda,2)));
+}
 
 
+// sorts the response data and returns the five closest results
+function sortParkData(completeResponse) {
+    // iterate through the complete response, and calculate distance from user supplied lat / lon. 
+    var userLocation = [29.749907, -95.358421]; // Houston coords for now
+    for (let i = 0; i < completeResponse.limit; i++) {
+      console.log(i)
+      var parkCoords = [Number(completeResponse.data[i].latitude), Number(completeResponse.data[i].longitude)];
+      var distanceCal = getDistance(userLocation, parkCoords);
+      completeResponse.data[i].distance = distanceCal;
+    }
 
+    completeResponse.data.sort(compareFn);
+    console.log(completeResponse)
+    console.log(completeResponse.data)
+    parkData = completeResponse;
+    function compareFn (a, b) {
+        return a.distance - b.distance
+    }
+}
 
 
 // Landing Page Button Functionality
@@ -203,7 +238,7 @@ function displayResults() {
   var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
   var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
   var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
-  var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + 'mi from API' );
+  var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi' );
 
   resultsColumn.append(resultItemCard);
   resultItemCard.append(
