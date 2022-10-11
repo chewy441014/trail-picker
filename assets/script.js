@@ -3,6 +3,7 @@ var weatherData;
 var parkData;
 var routeData;
 var searchArr = [weatherData, parkData, routeData];
+modalLink();
 
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
 // Sample request https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
@@ -187,7 +188,8 @@ function displayResults() {
   var resultsColumn = $('#results-column');
     for (i=0; i < 5; i++) {
 
-  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('data-target', 'detail-modal').attr('id', `card${i}`);
+  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('id', `card${i}`);
+//   resultItemCard.data-target = 'detail-modal'
   var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
   var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
   var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
@@ -199,5 +201,7 @@ function displayResults() {
       parkState,
       parkDescription,
       parkDistance
-  );
-}}
+  );  
+}
+modalLink()
+}
