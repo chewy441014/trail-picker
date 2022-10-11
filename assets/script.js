@@ -1,3 +1,12 @@
+// Launching location modal on page load
+
+$(document).ready(function(){
+ 
+    $("#location-modal").addClass("is-active");
+ 
+});
+
+
 // initialize global variables
 var weatherData;
 var parkData;
@@ -212,7 +221,9 @@ function displayBackgroundImage() {
 function displayResults() {
   var resultsColumn = $('#results-column');
 
+
   for (i = 0; i < 5; i++) {
+
 
     var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
     //   resultItemCard.data-target = 'detail-modal'
