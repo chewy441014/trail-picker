@@ -51,8 +51,8 @@ function getForecast() {
 // Preston's API Key VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG
 
 function findParksRelatedTo() {
-    var searchTerm = "hiking"; // insert user submitted text once we have the DOM element
-    var requestUrl = 'https://developer.nps.gov/api/v1/activities/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
+    var searchTerm = "fly fishing"; // insert user submitted text once we have the DOM element
+    var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
     // get the parks related to the search term gives parkCode fairly limited
     /*
     var requestUrl = 'https://developer.nps.gov/api/v1/activities?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
@@ -80,8 +80,10 @@ function findParksRelatedTo() {
         url: requestUrl,
         method: 'GET',
     }).then(function (response) {
-        console.log(response.data[0].parks);
+        console.log(response);
         parkData = response;
+        displayResults();
+        // console.log(parkData[0].data[0].fullName);
     })
 }
 
@@ -192,19 +194,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-//Michael results Page 
-function displayResults(searchResults) {
+//Michael - Dynamic HTML generation for results Page 
+function displayResults() {
   var resultsColumn = $('#results-column');
     for (i=0; i < 5; i++) {
 
-  var resultItemCard = $('<div>').addClass('card active-border block')
-  .attr({
-    data: clickable,
-    id: i
-    });
-  var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text("park name from api");
-  var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text('park state from api');
-  var parkDescription = $('<p>').addClass('ml-2').text("park desc from api");
+  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('data-target', 'detail-modal').attr('id', `card${i}`);
+  var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
+  var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
+  var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
   var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + 'mi from API' );
 
   resultsColumn.append(resultItemCard);
@@ -214,6 +212,52 @@ function displayResults(searchResults) {
       parkDescription,
       parkDistance
   );
-
 };
+
+  //Michael - Park Details Modal Trigger
+document.addEventListener('detail-modal', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) { // Escape key
+      closeAllModals();
+    }
+  });
+});
+
 }
