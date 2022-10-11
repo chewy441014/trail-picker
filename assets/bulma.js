@@ -16,15 +16,15 @@ function modalLink() {
         closeModal($modal);
       });
     }
-    console.log('Got to the button trigger');
+    // console.log('Got to the button trigger');
     // Add a click event on buttons to open a specific modal
     // console.log(document.querySelectorAll('.js-modal-trigger') || []);
     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
       const modal = $trigger.dataset.target;
       const $target = document.getElementById(modal);
-      console.log(modal);
-      console.log($target);
-      console.log($trigger);
+      // console.log(modal);
+      // console.log($target);
+      // console.log($trigger);
 
       $trigger.addEventListener('click', () => {
         openModal($target);
