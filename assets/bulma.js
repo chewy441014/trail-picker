@@ -1,6 +1,6 @@
 function modalLink() {
   // JS for Location Modal (Credit to Bulma docs example)
-  console.log('modal link running')
+  // console.log('modal link running')
   
     // Functions to open and close a modal
     function openModal($el) {
@@ -18,7 +18,7 @@ function modalLink() {
     }
     console.log('Got to the button trigger');
     // Add a click event on buttons to open a specific modal
-    console.log(document.querySelectorAll('.js-modal-trigger') || []);
+    // console.log(document.querySelectorAll('.js-modal-trigger') || []);
     (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
       const modal = $trigger.dataset.target;
       const $target = document.getElementById(modal);
@@ -30,7 +30,7 @@ function modalLink() {
         openModal($target);
       });
     });
-    console.log('past the button trigger  ');
+    // console.log('past the button trigger  ');
 
     // Add a click event on various child elements to close the parent modal
     (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
@@ -49,4 +49,6 @@ function modalLink() {
         closeAllModals();
       }
     });
+    // $('#updateBtn').on('click',closeAllModals)
 }
+

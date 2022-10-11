@@ -12,6 +12,8 @@ var weatherData;
 var parkData;
 var routeData;
 var searchArr = [weatherData, parkData, routeData];
+userLocation = "";
+userSearch = "";
 modalLink();
 
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
@@ -60,9 +62,10 @@ function getForecast() {
 // THIS API IS CURRENTLY IN DEVELOPMENT maybe we can contribute to it sometime
 // Preston's API Key VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG
 
-function findParksRelatedTo() {
-  var searchTerm = "fly fishing"; // insert user submitted text once we have the DOM element
+function findParksRelatedTo(searchTerm) {
+
   var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
+  console.log(requestUrl);
   // get the parks related to the search term gives parkCode fairly limited
   /*
   var requestUrl = 'https://developer.nps.gov/api/v1/activities?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
@@ -90,12 +93,12 @@ function findParksRelatedTo() {
     url: requestUrl,
     method: 'GET',
   }).then(function (response) {
-    // console.log(response);
+    console.log(response);
 
     parkData = response;
 
     sortParkData(response);
-
+    window.location.replace("./results_page.html");
     displayResults();
     // console.log(parkData[0].data[0].fullName);
   })
@@ -219,6 +222,7 @@ function displayBackgroundImage() {
 
 //Michael - Dynamic HTML generation for results Page 
 function displayResults() {
+  
   var resultsColumn = $('#results-column');
 
 
@@ -244,3 +248,19 @@ function displayResults() {
   modalLink();
 }
 
+
+function updateUS(){
+  console.log('ping1');
+  userSearch = $('#search-bar').val();
+  console.log(userSearch);
+  findParksRelatedTo(userSearch)
+}
+
+function updateUL(){
+  console.log('ping2');
+ userLocation = $('#startCity').val() + ', ' + $('#startState').val();
+//  console.log(userLocation);
+}
+
+$('#submit-search').on('click',updateUS);
+$('#updateBtn').on('click',updateUL);
