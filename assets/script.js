@@ -125,6 +125,18 @@ function getDirections() {
 
 }
 
+function getLatLon () {
+  var searchTerm = "Houston, TX";
+  var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
+  $.ajax({
+    url: requestUrl, 
+    method: 'GET',
+  }).then(function (response) {
+    locationData = response.results[0].locations[0].latLng;
+    console.log(locationData);
+  })
+}
+
 function displayMap(startPoint, endPoint) {
   L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
 
