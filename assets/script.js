@@ -158,15 +158,12 @@ function sortParkData(completeResponse) {
     // iterate through the complete response, and calculate distance from user supplied lat / lon. 
     var userLocation = [29.749907, -95.358421]; // Houston coords for now
     for (let i = 0; i < completeResponse.limit; i++) {
-      console.log(i)
       var parkCoords = [Number(completeResponse.data[i].latitude), Number(completeResponse.data[i].longitude)];
       var distanceCal = getDistance(userLocation, parkCoords);
       completeResponse.data[i].distance = distanceCal;
     }
 
     completeResponse.data.sort(compareFn);
-    console.log(completeResponse)
-    console.log(completeResponse.data)
     parkData = completeResponse;
     function compareFn (a, b) {
         return a.distance - b.distance
@@ -187,10 +184,10 @@ function displayResults() {
   var resultsColumn = $('#results-column');
     for (i=0; i < 5; i++) {
 
-  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('data-target', 'detail-modal').attr('id', `card${i}`);
+  var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('data-clickable', 'true').attr('data-target', 'detail-modal').attr('id', `card${i}`);
   var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
   var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
-  var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
+  var parkDescription = $('<p>').addClass('ml-2 mb-1').text(parkData.data[i].description.slice(0, 90)+'...');
   var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi' );
 
   resultsColumn.append(resultItemCard);
