@@ -22,6 +22,10 @@ li {
     max-height: 100%;
 }
 
+.column {
+    max-height: 100%;
+}
+
 .active-border {
     border: 3px solid blue;
 }
