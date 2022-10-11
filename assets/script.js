@@ -1,3 +1,12 @@
+// Launching location modal on page load
+
+$(document).ready(function(){
+ 
+    $("#location-modal").addClass("is-active");
+ 
+});
+
+
 // initialize global variables
 var weatherData;
 var parkData;
@@ -188,8 +197,7 @@ function displayResults() {
   var resultsColumn = $('#results-column');
     for (i=0; i < 5; i++) {
 
-  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('id', `card${i}`);
-//   resultItemCard.data-target = 'detail-modal'
+  var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('data-clickable', 'true').attr('data-target', 'location-modal').attr('id', `card${i}`);
   var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
   var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
   var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75)+'...');
@@ -203,5 +211,5 @@ function displayResults() {
       parkDistance
   );  
 }
-modalLink()
+modalLink();
 }
