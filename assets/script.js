@@ -179,6 +179,23 @@ function recentSearch(index){
 
 }
 
+// Michael - Random background image function
+function displayBackgroundImage() {
+  var imageArr = [
+    "./assets/images/background_images/big_prairie.jpg",
+    "./assets/images/background_images/delicate_arch.jpg",
+    "./assets/images/background_images/denali.jpg",
+    "./assets/images/background_images/grand_teton.jpg",
+    "./assets/images/background_images/mcdonald_creek.jpg",
+    "./assets/images/background_images/mesa_arch.jpg",
+    "./assets/images/background_images/santa_elena_canyon.jpg",
+    "./assets/images/background_images/white_sands.jpg"
+  ]
+  var backgroundImage = imageArr[Math.floor(imageArr.length * Math.random())];
+  console.log(backgroundImage);
+  $('body').css('background-image', 'url('+backgroundImage+')');
+}
+
 //Michael - Dynamic HTML generation for results Page 
 function displayResults() {
   var resultsColumn = $('#results-column');

@@ -5,7 +5,6 @@ body {
     /* background-image: url("./assets/images/5D08A7E6-155D-451F-67E900607CDE1EADOriginal.jpg"); */
 }
 
-/* Works on Chrome, Edge, and Safari */
 .container::-webkit-scrollbar {
   width: 12px;
 }
