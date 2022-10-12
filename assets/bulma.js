@@ -27,7 +27,12 @@ function modalLink() {
       // console.log(modal);
       // console.log($target);
       // console.log($trigger);
-      let findIndexOf = $trigger.id.replace('card', '');
+      
+      
+// check if id of card clicked on ===card{i} optional parameter
+      $trigger.addEventListener('click', () => {
+        openModal($target);
+        let findIndexOf = $trigger.id.replace('card', '');
       console.log(findIndexOf);
       if (findIndexOf) {
         
@@ -35,10 +40,6 @@ function modalLink() {
         console.log(findIndexOf);
       
       }
-      
-// check if id of card clicked on ===card{i} optional parameter
-      $trigger.addEventListener('click', () => {
-        openModal($target);
       });
     });
     // console.log('past the button trigger  ');
