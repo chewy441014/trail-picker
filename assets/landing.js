@@ -52,19 +52,19 @@ function loadLocalStorage() {
   }
 }
 
-// To be used for validation later
+// Validation for 
 
-// function getLatLon() {
-//   var searchTerm = "Houston, TX";
-//   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
-//   $.ajax({
-//     url: requestUrl,
-//     method: 'GET',
-//   }).then(function (response) {
-//     locationData = response.results[0].locations[0].latLng;
-//     console.log(locationData);
-//   })
-// }
+function getLatLon() {
+  var searchTerm = "Houston, TX";
+  var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
+  $.ajax({
+    url: requestUrl,
+    method: 'GET',
+  }).then(function (response) {
+    locationData = response.results[0].locations[0].latLng;
+    console.log(locationData);
+  })
+}
 
 // Landing Page Button Functionality
 // Local storage data for recent searches is going to be pulled from local storage and rendered on user click.
