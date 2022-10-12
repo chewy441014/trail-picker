@@ -237,65 +237,65 @@ function displayResults() {
     var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
     // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
 
-      resultItemCard.append(
-        parkName,
-        parkState,
-        parkDescription,
-        parkDistance,
-      );
-      resultsColumn.append(resultItemCard);
-      // displayParkDetails(i);
-      // console.log(parkData.data[i]);
+    resultItemCard.append(
+      parkName,
+      parkState,
+      parkDescription,
+      parkDistance,
+    );
+    resultsColumn.append(resultItemCard);
+    // displayParkDetails(i);
+    // console.log(parkData.data[i]);
 
-      
-     //pass parameter here - create a function to log data - fetch  
+
+    //pass parameter here - create a function to log data - fetch  
   }
-    modalLink();
-    //console.log(i);
+  modalLink();
+  //console.log(i);
 }
-  // Function to display Park Details
+// Function to display Park Details
 function displayParkDetails(findIndexOf) {
   console.log(typeof findIndexOf);
   var j = parseInt(findIndexOf);
   console.log(j);
-    // //appending park details to modal
-    console.log(parkData.data[j].fullName);
-    
-      document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
-      document.getElementById("park-desc").innerHTML = parkData.data[j].description;
-      document.getElementById("park-details").innerHTML = 
-      '<ul><li><a href='+parkData.data[j].url+'>Park Website</a></li>Activities: '+parkData.data[j].activities[0].name+'<li></li><li></li><li></li>';
-      // console.log(parkData.data[findIndexOf].url);
-      
-    } 
-  
+  // //appending park details to modal
+  console.log(parkData.data[j].fullName);
+
+  document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
+  document.getElementById("park-desc").innerHTML = parkData.data[j].description;
+  document.getElementById("park-details").innerHTML =
+    '<ul><li><a href=' + parkData.data[j].url + '>Park Website</a></li>Activities: ' + parkData.data[j].activities[0].name + '<li></li><li></li><li></li>';
+  // console.log(parkData.data[findIndexOf].url);
+
+}
+
 //   distance
 //     link
 //     activitiesList
 //     parkDescription
 //     campGround
 //     visitorCenter
-  //   console.log(i);
-  // }
+//   console.log(i);
+// }
 
 
-function updateWeather () {
+function updateWeather() {
   // for each of the five days for the forecast
-  for (let i = 0; i < 5; i ++) {
+  for (let i = 0; i < 5; i++) {
     // for each weather element, set the appropriate value
-    var currentCard = $(`#day${i+1}`);
+    var currentCard = $(`#day${i + 1}`);
     console.log(currentCard);
     var weatherSpans = currentCard.find("span");
     console.log(weatherSpans)
     // weathderData.data[i] is the i-th day's weather data
-    $(weatherSpans[0]).text(weatherData.data[i].temp+ " " +String.fromCharCode(186)+"C "); // temp data
-    $(weatherSpans[1]).text(weatherData.data[i].wind_spd+" m/s"); // wind data
-    $(weatherSpans[2]).text(weatherData.data[i].rh+" %"); // humidity data
-    $(weatherSpans[3]).text(weatherData.data[i].pop+" %"); // rain data
+    $(weatherSpans[0]).text(weatherData.data[i].temp + " " + String.fromCharCode(186) + "C "); // temp data
+    $(weatherSpans[1]).text(weatherData.data[i].wind_spd + " m/s"); // wind data
+    $(weatherSpans[2]).text(weatherData.data[i].rh + " %"); // humidity data
+    $(weatherSpans[3]).text(weatherData.data[i].pop + " %"); // rain data
     $(weatherSpans[4]).text(weatherData.data[i].moon_phase_lunation); // moon cycle
-    $(weatherSpans[5]).html('<img src="https://www.weatherbit.io/static/img/icons/'+weatherData.data[i].weather.icon+'.png" alt="'+weatherData.data[i].weather.description+'">'); // weather icon]
+    $(weatherSpans[5]).html('<img src="https://www.weatherbit.io/static/img/icons/' + weatherData.data[i].weather.icon + '.png" alt="' + weatherData.data[i].weather.description + '">'); // weather icon]
     $(weatherSpans[6]).text(weatherData.data[i].weather.description); // Description
-    $(weatherSpans[7]).text(weatherData.data[i].vis+" km"); // visibility
+    $(weatherSpans[7]).text(weatherData.data[i].vis + " km"); // visibility
   }
 }
 
@@ -313,31 +313,40 @@ function updateWeather () {
           </div>
 */
 
-function generateWeatherCard () {
+function generateWeatherCard() {
   // generate five cards with appropriate default text for filling with data
   var weatherSection = $("#weather");
-  for (let i = 0; i < 5; i ++) {
+  for (let i = 0; i < 5; i++) {
     // for each card, generate the default text
     var myCard = $("<div>");
     myCard.addClass("column");
-    myCard.attr("id", `day${i+1}`);
+    myCard.attr("id", `day${i + 1}`);
     var myTemp = $("<p>");
-    myTemp.html('Temperature: <span id="temp' + `${i+1}` + '"></span>');
+    myTemp.html('Temperature: <span id="temp' + `${i + 1}` + '"></span>');
     var myWind = $("<p>");
-    myWind.html('Wind: <span id="wind' + `${i+1}` + '"></span>');
+    myWind.html('Wind: <span id="wind' + `${i + 1}` + '"></span>');
     var myHumidity = $("<p>");
-    myHumidity.html('Humidity: <span id="Humidity' + `${i+1}` + '"></span>');
+    myHumidity.html('Humidity: <span id="Humidity' + `${i + 1}` + '"></span>');
     var myPOP = $("<p>");
-    myPOP.html();
+    myPOP.html('Chance of Rain: <span id="Rain' + `${i + 1}` + '"></span>');
     var myMoon = $("<p>");
-    myMoon.html();
+    myMoon.html('Moon Cycle: <span id="Moon' + `${i + 1}` + '"></span>');
     var myIcon = $("<p>");
-    myIcon.html();
+    myIcon.html('<span id= "Weathericon' + `${i + 1}` + '"></span>');
     var myDesc = $("<p>");
-    myIcon.html();
+    myIcon.html('Description: <span id="Description' + `${i + 1}` + '"></span>');
     var myVis = $("<p>");
-    myVis.html();
+    myVis.html('Visibility: <span id="Visibility' + `${i + 1}` + '"></span>');
     myCard.append(myTemp, myWind, myHumidity, myPOP, myMoon, myIcon, myDesc, myVis);
+   console.log(myCard);
+   console.log(weatherSection);
+    weatherSection.append(myCard);
+
   }
+
+
+
+
+
   updateWeather();
 }
