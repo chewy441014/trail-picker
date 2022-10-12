@@ -291,3 +291,46 @@ function updateWeather () {
     $(weatherSpans[7]).text(weatherData.data[i].vis+" km"); // visibility
   }
 }
+
+/*
+<div class="column" id="day1">
+            <!-- // here is the weather data -->
+            <p>Temperature: <span id="temp1"></span></p>
+            <p>Wind: <span id="wind1"></span></p>
+            <p>Humidity: <span id="Humidity1"></span></p>
+            <p>Chance of Rain: <span id="Rain1"></span></p>
+            <p>Moon Cycle: <span id="Moon1"></span></p>
+            <p><span id= "Weathericon1"></span></p>
+            <p>Description: <span id="Description1"></span></p>
+            <p>Visibility : <span id="Visibility1"></span></p>
+          </div>
+*/
+
+function generateWeatherCard () {
+  // generate five cards with appropriate default text for filling with data
+  var weatherSection = $("#weather");
+  for (let i = 0; i < 5; i ++) {
+    // for each card, generate the default text
+    var myCard = $("<div>");
+    myCard.addClass("column");
+    myCard.attr("id", `day${i+1}`);
+    var myTemp = $("<p>");
+    myTemp.html('Temperature: <span id="temp' + `${i+1}` + '"></span>');
+    var myWind = $("<p>");
+    myWind.html('Wind: <span id="wind' + `${i+1}` + '"></span>');
+    var myHumidity = $("<p>");
+    myHumidity.html('Humidity: <span id="Humidity' + `${i+1}` + '"></span>');
+    var myPOP = $("<p>");
+    myPOP.html();
+    var myMoon = $("<p>");
+    myMoon.html();
+    var myIcon = $("<p>");
+    myIcon.html();
+    var myDesc = $("<p>");
+    myIcon.html();
+    var myVis = $("<p>");
+    myVis.html();
+    myCard.append(myTemp, myWind, myHumidity, myPOP, myMoon, myIcon, myDesc, myVis);
+  }
+  updateWeather();
+}
