@@ -69,3 +69,12 @@ li {
     height: 300px;
     width: 300px;
 }
+
+#location-box{
+    border-radius: 15px;
+    
+}
+
+#search-box{
+    border-radius: 15px;
+}
