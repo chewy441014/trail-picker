@@ -51,4 +51,3 @@ function modalLink() {
     });
     $('#updateBtn').on('click',closeAllModals)
 }
-
