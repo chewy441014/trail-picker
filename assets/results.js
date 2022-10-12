@@ -130,7 +130,7 @@ function findParksRelatedTo(searchTerm) {
 // Michael's API key Q87JNminvctmB5QAimcXQlzSf33AmhqY
 function getDirections() {
   var startingPoint = userLocation;
-  var endPoint = "El Paso, TX"; // insert user generated end point
+  var endPoint = "El Paso, TX"; // insert user generated end point taking city and state from park data
   //var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=' + startingPoint + '&end='+ endPoint + '&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
   var requestUrl = 'https://www.mapquestapi.com/directions/v2/route?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&from=' + startingPoint + '&to=' + endPoint;
   // var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';

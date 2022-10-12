@@ -39,8 +39,11 @@ function modalLink() {
         let findIndexOf = $trigger.id.replace('card', '');
       console.log(findIndexOf);
       if (findIndexOf) {
+       getDirections();
+         displayMap();
         
         displayParkDetails(findIndexOf);
+
         console.log(findIndexOf);
       
       }
