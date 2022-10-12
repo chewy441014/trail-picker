@@ -248,20 +248,26 @@ function displayResults() {
       // console.log(parkData.data[i]);
 
       
-    modalLink(i); //pass parameter here - create a function to log data - fetch  
+     //pass parameter here - create a function to log data - fetch  
   }
-    
+    modalLink();
     //console.log(i);
   }
   // Function to display Park Details
-// function displayParkDetails(i) {
+function displayParkDetails(findIndexOf) {
+  console.log(typeof findIndexOf);
+  var j = parseInt(findIndexOf);
+  console.log(j);
     // //appending park details to modal
-    //   document.getElementById("park-name").innerHTML = parkData.data[i].fullName;
-    //   document.getElementById("park-desc").innerHTML = parkData.data[i].description;
-    //   document.getElementById("park-details").innerHTML = 
-    //   '<ul><li><a href='+parkData.data[i].url+'>Park Website</a></li>Activities: '+parkData.data[i].activities[0].name+'<li></li><li></li><li></li>';
-    //   console.log(parkData.data[i].url);
-  
+    console.log(parkData.data[j].fullName);
+    
+      document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
+      document.getElementById("park-desc").innerHTML = parkData.data[j].description;
+      document.getElementById("park-details").innerHTML = 
+      '<ul><li><a href='+parkData.data[j].url+'>Park Website</a></li>Activities: '+parkData.data[j].activities[0].name+'<li></li><li></li><li></li>';
+      // console.log(parkData.data[findIndexOf].url);
+      
+    } 
   
 //   distance
 //     link
