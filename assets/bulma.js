@@ -27,15 +27,19 @@ function modalLink() {
       // console.log(modal);
       // console.log($target);
       // console.log($trigger);
-      console.log($trigger.id);
-      let findIndexOf = $trigger.id.replace('card', '');
-      let currentIndex = i;
-      console.log(currentIndex);
-      console.log(findIndexOf);
-      console.log(i);
+      
+      
 // check if id of card clicked on ===card{i} optional parameter
       $trigger.addEventListener('click', () => {
         openModal($target);
+        let findIndexOf = $trigger.id.replace('card', '');
+      console.log(findIndexOf);
+      if (findIndexOf) {
+        
+        displayParkDetails(findIndexOf);
+        console.log(findIndexOf);
+      
+      }
       });
     });
     // console.log('past the button trigger  ');
