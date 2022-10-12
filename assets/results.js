@@ -1,20 +1,70 @@
-// Launching location modal on page load
 
-$(document).ready(function(){
- 
-    $("#location-modal").addClass("is-active");
- 
-});
 
 
 // initialize global variables
 var weatherData;
 var parkData;
 var routeData;
-var searchArr = [weatherData, parkData, routeData];
+var searchObj = { weather: weatherData, parks: parkData, route: routeData };
+var searchHistory = [];
 userLocation = "";
 userSearch = "";
-modalLink();
+
+onLoad();
+
+function onLoad() {
+  modalLink();
+  loadLocalStorage();
+  displayBackgroundImage();
+  findParksRelatedTo(userSearch);
+}
+
+function loadLocalStorage() {
+  if (JSON.parse(localStorage.getItem('searchHistory'))) {
+    // if there exists some localstorage, assign the value of the search history to it
+    searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+
+  } else {
+    // if not, create an empty one
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  }
+
+  if (JSON.parse(localStorage.getItem('userLocation'))) {
+    // if there exists some localstorage, assign the value of the search history to it
+    userLocation = JSON.parse(localStorage.getItem('userLocation'));
+
+  } else {
+    // if not, create an empty one
+    localStorage.setItem('userLocation', JSON.stringify(userLocation));
+  }
+
+  if (JSON.parse(localStorage.getItem('userSearch'))) {
+    // if there exists some localstorage, assign the value of the search history to it
+    userSearch = JSON.parse(localStorage.getItem('userSearch'));
+
+  } else {
+    // if not, create an empty one
+    localStorage.setItem('userSearch', JSON.stringify(userSearch));
+  }
+}
+
+function saveLocalStorage() {
+
+  if (searchHistory.length < 3) {
+    searchHistory.push(searchObj);
+    // if there exists some localstorage, assign the value of the search history to it
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+  }
+
+  else {
+    searchHistory.splice(0);
+    searchHistory.push(searchObj);
+    // if there exists some localstorage, assign the value of the search history to it
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+  }
+
+
+}
 
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
 // Sample request https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
@@ -54,6 +104,8 @@ function getForecast() {
     console.log(response.data[0].ozone)
     console.log(response.data[0].sunrise_ts)
     weatherData = response;
+    searchObj.weather = weatherData;
+    saveLocalStorage()
     // and more
   })
 }
@@ -98,7 +150,9 @@ function findParksRelatedTo(searchTerm) {
     parkData = response;
 
     sortParkData(response);
-    window.location.replace("./results_page.html");
+    searchObj.parks = parkData;
+    saveLocalStorage();
+    console.log('THIS PROCESS CONTINUED')
     displayResults();
     // console.log(parkData[0].data[0].fullName);
   })
@@ -123,16 +177,18 @@ function getDirections() {
   }).then(function (response) {
     // console.log(response);
     routeData = response;
+    searchObj.route = routeData;
+    saveLocalStorage()
     displayMap(startingPoint, endPoint);
   });
 
 }
 
-function getLatLon () {
+function getLatLon() {
   var searchTerm = "Houston, TX";
   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
-    url: requestUrl, 
+    url: requestUrl,
     method: 'GET',
   }).then(function (response) {
     locationData = response.results[0].locations[0].latLng;
@@ -202,7 +258,7 @@ function sortParkData(completeResponse) {
 // Local storage data for recent searches is going to be pulled from local storage and rendered on user click.
 
 function recentSearch(index) {
-  var recentData = JSON.parse(localStorage.getItem('searchData'));
+  var recentData = JSON.parse(localStorage.getItem('searchHistory'));
 
 }
 
@@ -220,61 +276,60 @@ function displayBackgroundImage() {
   ]
   var backgroundImage = imageArr[Math.floor(imageArr.length * Math.random())];
   console.log(backgroundImage);
-  $('body').css('background-image', 'url('+backgroundImage+')');
+  $('body').css('background-image', 'url(' + backgroundImage + ')');
 }
 
 //Michael - Dynamic HTML generation for results Page 
 function displayResults() {
-  
+
   var resultsColumn = $('#results-column');
-
-
-  for (i = 0; i < 5; i++) {
-
-    var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
-    //   resultItemCard.data-target = 'detail-modal'
-    var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
-    var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
-    var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
-    var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
-    // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
-    
-    resultItemCard.append(
-      parkName,
-      parkState,
-      parkDescription,
-      parkDistance,
-    );
-    resultsColumn.append(resultItemCard);
-    displayParkDetails(i);
+  if (searchHistory.length === 1) {
+    var parkData = searchHistory[0].parks;
   }
-  modalLink();
-  console.log(i);
-}
-// Function to display Park Details
-function displayParkDetails(i) {
-  // distance
-  // link
-  // activitiesList
-  // parkDescription
-  // campGround
-  // visitorCenter
-  console.log(i);
-}
+  else {
+    
+    var parkDatatemp = searchHistory.slice(-1);
+    console.log(parkDatatemp);
+    parkData = parkDatatemp[0].parks;
+  }
+  console.log(searchHistory);
+  console.log(searchHistory.slice(-1));
+  console.log(parkData);
+    for (i = 0; i < 5; i++) {
+
+      var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
+      //   resultItemCard.data-target = 'detail-modal'
+      var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
+      var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
+      var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
+      var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
+      // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
+
+      resultItemCard.append(
+        parkName,
+        parkState,
+        parkDescription,
+        parkDistance,
+      );
+      resultsColumn.append(resultItemCard);
+      displayParkDetails(i);
+    }
+    modalLink();
+    console.log(i);
+  }
+  // Function to display Park Details
+  function displayParkDetails(i) {
+    // distance
+    // link
+    // activitiesList
+    // parkDescription
+    // campGround
+    // visitorCenter
+    console.log(i);
+  }
 
 
-function updateUS(){
-  console.log('ping1');
-  userSearch = $('#search-bar').val();
-  console.log(userSearch);
-  findParksRelatedTo(userSearch)
-}
 
-function updateUL(){
-  console.log('ping2');
- userLocation = $('#startCity').val() + ', ' + $('#startState').val();
-//  console.log(userLocation);
-}
 
-$('#submit-search').on('click',updateUS);
-$('#updateBtn').on('click',updateUL);
+
+
