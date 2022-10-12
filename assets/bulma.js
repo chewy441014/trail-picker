@@ -49,6 +49,5 @@ function modalLink() {
         closeAllModals();
       }
     });
-    // $('#updateBtn').on('click',closeAllModals)
+    $('#updateBtn').on('click',closeAllModals)
 }
-
