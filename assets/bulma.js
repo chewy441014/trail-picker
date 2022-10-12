@@ -1,4 +1,6 @@
 function modalLink() {
+  // pass same infomation or rename (in parameter)
+  // same notation with .details
   // JS for Location Modal (Credit to Bulma docs example)
   // console.log('modal link running')
   
@@ -25,7 +27,13 @@ function modalLink() {
       // console.log(modal);
       // console.log($target);
       // console.log($trigger);
-
+      console.log($trigger.id);
+      let findIndexOf = $trigger.id.replace('card', '');
+      let currentIndex = i;
+      console.log(currentIndex);
+      console.log(findIndexOf);
+      console.log(i);
+// check if id of card clicked on ===card{i} optional parameter
       $trigger.addEventListener('click', () => {
         openModal($target);
       });
