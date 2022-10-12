@@ -259,3 +259,23 @@ function displayParkDetails(i) {
   // visitorCenter
   console.log(i);
 }
+
+function updateWeather () {
+  // for each of the five days for the forecast
+  for (let i = 0; i < 5; i ++) {
+    // for each weather element, set the appropriate value
+    var currentCard = $(`#day${i+1}`);
+    console.log(currentCard);
+    var weatherSpans = currentCard.find("span");
+    console.log(weatherSpans)
+    // weathderData.data[i] is the i-th day's weather data
+    $(weatherSpans[0]).text(weatherData.data[i].temp); // temp data
+    $(weatherSpans[1]).text(weatherData.data[i].wind_spd); // wind data
+    $(weatherSpans[2]).text(weatherData.data[i].temp); // humidity data
+    $(weatherSpans[3]).text(weatherData.data[i].temp); // rain data
+    $(weatherSpans[4]).text(weatherData.data[i].temp); // moon cycle
+    $(weatherSpans[5]).text(weatherData.data[i].temp); // weather icon
+    $(weatherSpans[6]).text(weatherData.data[i].temp); // Description
+    $(weatherSpans[7]).text(weatherData.data[i].temp); // visibility
+  }
+}
