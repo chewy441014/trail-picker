@@ -4,7 +4,7 @@ var parkData;
 var routeData;
 var userLocation = "";
 var userSearch = "";
-var locationData;
+var locationData = {};
 
 onLoad();
 
@@ -18,14 +18,6 @@ function onLoad() {
 }
 
 function loadLocalStorage() {
-  // if (JSON.parse(localStorage.getItem('searchHistory'))) {
-  //   // if there exists some localstorage, assign the value of the search history to it
-  //   searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
-
-  // } else {
-  //   // if not, create an empty one
-  //   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-  // }
   if (JSON.parse(localStorage.getItem('userLocation'))) {
     // if there exists some localstorage, assign the value of the search history to it
     userLocation = JSON.parse(localStorage.getItem('userLocation'));
@@ -49,20 +41,6 @@ function loadLocalStorage() {
   }
 }
 
-// function saveLocalStorage() {
-//   if (searchHistory.length < 3) {
-//     searchHistory.push(searchObj);
-//     // if there exists some localstorage, assign the value of the search history to it
-//     localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
-//   }
-//   else {
-//     searchHistory.splice(0);
-//     searchHistory.push(searchObj);
-//     // if there exists some localstorage, assign the value of the search history to it
-//     localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
-//   }
-
-// }
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
 // Sample request https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
 
@@ -79,8 +57,8 @@ function getForecast(userLocation) {
     url: requestUrl,
     method: 'GET',
   }).then(function (response) {
-    console.log('AJAX Response \n-------------');
-    console.log(response);
+    // console.log('AJAX Response \n-------------');
+    // console.log(response);
     // console.log(response.city_name); // string city name
     // console.log(response.lat); // string latitude
     // console.log(response.lon); // string longitude
@@ -101,9 +79,6 @@ function getForecast(userLocation) {
     // console.log(response.data[0].ozone)
     // console.log(response.data[0].sunrise_ts)
     weatherData = response;
-    // searchObj.weather = weatherData;
-    // saveLocalStorage()
-    // and more
   })
 }
 
@@ -144,11 +119,7 @@ function findParksRelatedTo(searchTerm) {
     // console.log(response);
     parkData = response;
     sortParkData(response);
-    // searchObj.parks = parkData;
-    // saveLocalStorage();
-    // console.log('THIS PROCESS CONTINUED')
     displayResults();
-    // console.log(parkData[0].data[0].fullName);
   })
 }
 
@@ -169,20 +140,20 @@ function getDirections() {
   }).then(function (response) {
     // console.log(response);
     routeData = response;
-    // searchObj.route = routeData;
-    // saveLocalStorage()
     displayMap(startingPoint, endPoint);
   });
 }
 
 function getLatLon(userLocation) {
   var searchTerm = userLocation;
+  console.log(searchTerm);
   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
     url: requestUrl,
     method: 'GET',
   }).then(function (response) {
     locationData = response.results[0].locations[0].latLng;
+    localStorage.setItem('locationData', JSON.stringify(locationData));
     // console.log(locationData);
   })
 }
@@ -256,18 +227,6 @@ function displayBackgroundImage() {
 function displayResults() {
 
   var resultsColumn = $('#results-column');
-  // if (searchHistory.length === 1) {
-  //   var parkData = searchHistory[0].parks;
-  // }
-  // else {
-
-  //   var parkDatatemp = searchHistory.slice(-1);
-  //   console.log(parkDatatemp);
-  //   parkData = parkDatatemp[0].parks;
-  // }
-  // console.log(searchHistory);
-  // console.log(searchHistory.slice(-1));
-  // console.log(parkData);
   for (i = 0; i < 5; i++) {
 
     var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
@@ -300,9 +259,3 @@ function displayParkDetails(i) {
   // visitorCenter
   console.log(i);
 }
-
-
-
-
-
-
