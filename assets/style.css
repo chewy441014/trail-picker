@@ -69,7 +69,9 @@ li {
 }
 
 
-
+#submit-search{
+    width:100%
+}
 
 #map {
     height: 300px;
@@ -81,3 +83,6 @@ li {
     
 }
 
+.landing-page-btns{
+    width: 50%;
+}
