@@ -17,9 +17,9 @@
           <div class="modal-background">
             
           </div>
-          <div class="modal-content">
+          <div class="modal-content" id="location-box">
             <div class="section has-background-light">
-              <h1>Location Settings</h1>
+              <h1>Enter Starting Location for Trip:</h1>
               <div class="block"></div>
                 <textarea type="text" placeholder="City" id="startCity"></textarea>
                 <textarea type="text" placeholder="State" id="startState"></textarea>
@@ -30,7 +30,7 @@
       
       
      
-       <div class="section is-medium has-background-white mt-6 mb-4" id="search-box">     
+       <div class="section is-medium mt-6 mb-4 has-background-dark" id="search-box">     
           <div class="block"> 
             <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal">
             Location
@@ -41,13 +41,13 @@
             <button class= "button is-info is-outlined" id="submit-search">Search</button>
             
             <div class="section is-small is-flex is-justify-content-center is-align-items-center">
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)">
+              <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)" id="recent1">
               Recent Search 1
               </button>
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)">
+              <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)" id="recent2">
               Recent Search 2
               </button>
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)">
+              <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)" id="recent3">
               Recent Search 3
               </button>
             </div>
