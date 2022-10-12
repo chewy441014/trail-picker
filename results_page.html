@@ -19,13 +19,18 @@
     </div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Modal title</p>
+        <p class="modal-card-title" id="park-name">Modal title</p>
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
           <div class="columns">
-            <div class="column">
-              Weather Data
+            <div class="column" id="park-desc">
+
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column" id="park-details">
+            
             </div>
             <div class="column" id="map">
               
@@ -101,7 +106,7 @@
             <p>Description: <span id="Description5"></span></p>
             <p>Visibility : <span id="Visibility5"></span></p>
           </div>
-        </section>
+        </div>
 
 
 
@@ -121,20 +126,10 @@
   <section class="section is-flex is-align-items-center">
     <div class="container is-vcentered">
       <div class="columns is-justify-content-center">
-        <div class="column" id="results-column"></div>
+        <div class="column is-two-thirds" id="results-column"></div>
       </div>
     </div>
-
-    <!-- <div class="column is-one-third">
-            <div class="card-image active-border">
-                <figure class="image is-4by3">
-                  <img id="map">
-                </figure>
-            </div>
-        </div> -->
   </section>
-
-
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
