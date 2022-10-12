@@ -24,21 +24,50 @@ function onLoad() {
 }
 
 function loadLocalStorage() {
-  console.log(!JSON.parse(localStorage.getItem('searchHistory')))
   if (JSON.parse(localStorage.getItem('searchHistory'))) {
     // if there exists some localstorage, assign the value of the search history to it
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+    
   } else {
     // if not, create an empty one
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
   }
+
+  if (JSON.parse(localStorage.getItem('userLocation'))) {
+    // if there exists some localstorage, assign the value of the search history to it
+    userLocation = JSON.parse(localStorage.getItem('userLocation'));
+    
+  } else {
+    // if not, create an empty one
+    localStorage.setItem('userLocation', JSON.stringify(userLocation));
+  }
+
+  if (JSON.parse(localStorage.getItem('userSearch'))) {
+    // if there exists some localstorage, assign the value of the search history to it
+    userSearch = JSON.parse(localStorage.getItem('userSearch'));
+    
+  } else {
+    // if not, create an empty one
+    localStorage.setItem('userSearch', JSON.stringify(userSearch));
+  }
 }
 
 function saveLocalStorage() {
-  searchHistory.push(searchObj);
-  // if there exists some localstorage, assign the value of the search history to it
-  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-
+  
+  if(searchHistory.length < 3){
+    searchHistory.push(searchObj);
+    // if there exists some localstorage, assign the value of the search history to it
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))  
+  }
+  
+  else{
+    searchHistory.splice(0);
+    searchHistory.push(searchObj);
+    // if there exists some localstorage, assign the value of the search history to it
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))  
+  }
+  
+  
 }
 
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
@@ -295,15 +324,17 @@ function displayParkDetails(i) {
 
 
 function updateUS() {
-  console.log('ping1');
   userSearch = $('#search-bar').val();
-  console.log(userSearch);
-  findParksRelatedTo(userSearch)
+  localStorage.setItem('userSearch', JSON.stringify(userSearch));
+  findParksRelatedTo(userSearch);
 }
 
 function updateUL() {
-  console.log('ping2');
   userLocation = $('#startCity').val() + ', ' + $('#startState').val();
-  //  console.log(userLocation);
+  localStorage.setItem('userLocation', JSON.stringify(userLocation));
 }
+
+
+
+
 
