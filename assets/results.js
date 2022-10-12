@@ -237,28 +237,40 @@ function displayResults() {
     var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
     // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
 
-    resultItemCard.append(
-      parkName,
-      parkState,
-      parkDescription,
-      parkDistance,
-    );
-    resultsColumn.append(resultItemCard);
-    displayParkDetails(i);
-  }
-  modalLink();
-  console.log(i);
+      resultItemCard.append(
+        parkName,
+        parkState,
+        parkDescription,
+        parkDistance,
+      );
+      resultsColumn.append(resultItemCard);
+      // displayParkDetails(i);
+      // console.log(parkData.data[i]);
+
+      
+    modalLink(i); //pass parameter here - create a function to log data - fetch  
+  }    
+    //console.log(i);
 }
-// Function to display Park Details
-function displayParkDetails(i) {
-  // distance
-  // link
-  // activitiesList
-  // parkDescription
-  // campGround
-  // visitorCenter
-  console.log(i);
-}
+  // Function to display Park Details
+// function displayParkDetails(i) {
+    // //appending park details to modal
+    //   document.getElementById("park-name").innerHTML = parkData.data[i].fullName;
+    //   document.getElementById("park-desc").innerHTML = parkData.data[i].description;
+    //   document.getElementById("park-details").innerHTML = 
+    //   '<ul><li><a href='+parkData.data[i].url+'>Park Website</a></li>Activities: '+parkData.data[i].activities[0].name+'<li></li><li></li><li></li>';
+    //   console.log(parkData.data[i].url);
+  
+  
+//   distance
+//     link
+//     activitiesList
+//     parkDescription
+//     campGround
+//     visitorCenter
+  //   console.log(i);
+  // }
+
 
 function updateWeather () {
   // for each of the five days for the forecast

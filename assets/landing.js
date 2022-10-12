@@ -1,5 +1,3 @@
-
-
 // initialize global variables
 var userLocation = "";
 var userSearch = "";
