@@ -2,6 +2,7 @@ body {
     height: 100vh;
     width: 100vw;
     background-size: cover;  
+    background-attachment: fixed;
     /* background-image: url("./assets/images/5D08A7E6-155D-451F-67E900607CDE1EADOriginal.jpg"); */
 }
 
@@ -62,10 +63,26 @@ li {
 }
 
 #search-box{
-    width: 75%
+    width: 75%;
+    box-shadow: 0 0 5px 0 ;
+    border-radius: 15px;
+}
+
+
+#submit-search{
+    width:100%
 }
 
 #map {
     height: 300px;
     width: 300px;
+}
+
+#location-box{
+    border-radius: 15px;
+    
+}
+
+.landing-page-btns{
+    width: 50%;
 }
