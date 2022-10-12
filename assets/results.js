@@ -252,7 +252,7 @@ function displayResults() {
   }
     modalLink();
     //console.log(i);
-  }
+}
   // Function to display Park Details
 function displayParkDetails(findIndexOf) {
   console.log(typeof findIndexOf);
@@ -279,7 +279,22 @@ function displayParkDetails(findIndexOf) {
   // }
 
 
-
-
-
-
+function updateWeather () {
+  // for each of the five days for the forecast
+  for (let i = 0; i < 5; i ++) {
+    // for each weather element, set the appropriate value
+    var currentCard = $(`#day${i+1}`);
+    console.log(currentCard);
+    var weatherSpans = currentCard.find("span");
+    console.log(weatherSpans)
+    // weathderData.data[i] is the i-th day's weather data
+    $(weatherSpans[0]).text(weatherData.data[i].temp+ " " +String.fromCharCode(186)+"C "); // temp data
+    $(weatherSpans[1]).text(weatherData.data[i].wind_spd+" m/s"); // wind data
+    $(weatherSpans[2]).text(weatherData.data[i].rh+" %"); // humidity data
+    $(weatherSpans[3]).text(weatherData.data[i].pop+" %"); // rain data
+    $(weatherSpans[4]).text(weatherData.data[i].moon_phase_lunation); // moon cycle
+    $(weatherSpans[5]).html('<img src="https://www.weatherbit.io/static/img/icons/'+weatherData.data[i].weather.icon+'.png" alt="'+weatherData.data[i].weather.description+'">'); // weather icon]
+    $(weatherSpans[6]).text(weatherData.data[i].weather.description); // Description
+    $(weatherSpans[7]).text(weatherData.data[i].vis+" km"); // visibility
+  }
+}
