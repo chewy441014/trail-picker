@@ -30,15 +30,17 @@
       
       
      
-       <div class="section is-medium mt-6 mb-4 has-background-dark" id="search-box">     
-          <div class="block"> 
-            <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal">
-            Location
-            </button> 
-          </div>
+       <div class="section is-medium is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-dark" id="search-box">     
+          
             
-            <input class="input is-info" type="text" placeholder="Search by Activities, State, or Park Name" id="search-bar">
-            <button class= "button is-info is-outlined" id="submit-search">Search</button>
+            <input class="input is-info is-grouped" type="text" placeholder="Search by Activities, State, or Park Name" id="search-bar">
+            
+            <div class="is-flex is-flex-direction-row landing-page-btns">
+              <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal">
+                Location
+                </button> 
+             <button class= "button is-info is-outlined" id="submit-search">Search</button>
+            </div>
             
             <div class="section is-small is-flex is-justify-content-center is-align-items-center">
               <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)" id="recent1">
