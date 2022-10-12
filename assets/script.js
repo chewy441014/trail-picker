@@ -155,8 +155,10 @@ function findParksRelatedTo(searchTerm) {
 
     sortParkData(response);
     searchObj.parks = parkData;
-    saveLocalStorage()
+    saveLocalStorage();
     window.location.replace("./results_page.html");
+    console.log('THIS PROCESS CONTINUED')
+    loadLocalStorage();
     displayResults();
     // console.log(parkData[0].data[0].fullName);
   })
@@ -287,7 +289,7 @@ function displayBackgroundImage() {
 function displayResults() {
 
   var resultsColumn = $('#results-column');
-
+  var parkData = searchHistory[-1].parks;
 
   for (i = 0; i < 5; i++) {
 
