@@ -14,20 +14,16 @@ onLoad();
 
 function onLoad() {
   modalLink();
-  // Launching location modal on page load
-  $(document).ready(function () {
-    $("#location-modal").addClass("is-active");
-  });
-  $('#submit-search').on('click', updateUS);
-  $('#updateBtn').on('click', updateUL);
   loadLocalStorage();
+  displayBackgroundImage();
+  findParksRelatedTo(userSearch);
 }
 
 function loadLocalStorage() {
   if (JSON.parse(localStorage.getItem('searchHistory'))) {
     // if there exists some localstorage, assign the value of the search history to it
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
-    
+
   } else {
     // if not, create an empty one
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
@@ -36,7 +32,7 @@ function loadLocalStorage() {
   if (JSON.parse(localStorage.getItem('userLocation'))) {
     // if there exists some localstorage, assign the value of the search history to it
     userLocation = JSON.parse(localStorage.getItem('userLocation'));
-    
+
   } else {
     // if not, create an empty one
     localStorage.setItem('userLocation', JSON.stringify(userLocation));
@@ -45,7 +41,7 @@ function loadLocalStorage() {
   if (JSON.parse(localStorage.getItem('userSearch'))) {
     // if there exists some localstorage, assign the value of the search history to it
     userSearch = JSON.parse(localStorage.getItem('userSearch'));
-    
+
   } else {
     // if not, create an empty one
     localStorage.setItem('userSearch', JSON.stringify(userSearch));
@@ -53,21 +49,21 @@ function loadLocalStorage() {
 }
 
 function saveLocalStorage() {
-  
-  if(searchHistory.length < 3){
+
+  if (searchHistory.length < 3) {
     searchHistory.push(searchObj);
     // if there exists some localstorage, assign the value of the search history to it
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))  
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
   }
-  
-  else{
+
+  else {
     searchHistory.splice(0);
     searchHistory.push(searchObj);
     // if there exists some localstorage, assign the value of the search history to it
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))  
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
   }
-  
-  
+
+
 }
 
 // Preston's API key 9d63d6881d944cc0b56b419592045f7b
@@ -156,9 +152,7 @@ function findParksRelatedTo(searchTerm) {
     sortParkData(response);
     searchObj.parks = parkData;
     saveLocalStorage();
-    window.location.replace("./results_page.html");
     console.log('THIS PROCESS CONTINUED')
-    loadLocalStorage();
     displayResults();
     // console.log(parkData[0].data[0].fullName);
   })
@@ -289,52 +283,51 @@ function displayBackgroundImage() {
 function displayResults() {
 
   var resultsColumn = $('#results-column');
-  var parkData = searchHistory[-1].parks;
-
-  for (i = 0; i < 5; i++) {
-
-    var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
-    //   resultItemCard.data-target = 'detail-modal'
-    var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
-    var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
-    var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
-    var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
-    // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
-
-    resultItemCard.append(
-      parkName,
-      parkState,
-      parkDescription,
-      parkDistance,
-    );
-    resultsColumn.append(resultItemCard);
-    displayParkDetails(i);
+  if (searchHistory.length === 1) {
+    var parkData = searchHistory[0].parks;
   }
-  modalLink();
-  console.log(i);
-}
-// Function to display Park Details
-function displayParkDetails(i) {
-  // distance
-  // link
-  // activitiesList
-  // parkDescription
-  // campGround
-  // visitorCenter
-  console.log(i);
-}
+  else {
+    
+    var parkDatatemp = searchHistory.slice(-1);
+    console.log(parkDatatemp);
+    parkData = parkDatatemp[0].parks;
+  }
+  console.log(searchHistory);
+  console.log(searchHistory.slice(-1));
+  console.log(parkData);
+    for (i = 0; i < 5; i++) {
 
+      var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
+      //   resultItemCard.data-target = 'detail-modal'
+      var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
+      var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
+      var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
+      var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
+      // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
 
-function updateUS() {
-  userSearch = $('#search-bar').val();
-  localStorage.setItem('userSearch', JSON.stringify(userSearch));
-  findParksRelatedTo(userSearch);
-}
+      resultItemCard.append(
+        parkName,
+        parkState,
+        parkDescription,
+        parkDistance,
+      );
+      resultsColumn.append(resultItemCard);
+      displayParkDetails(i);
+    }
+    modalLink();
+    console.log(i);
+  }
+  // Function to display Park Details
+  function displayParkDetails(i) {
+    // distance
+    // link
+    // activitiesList
+    // parkDescription
+    // campGround
+    // visitorCenter
+    console.log(i);
+  }
 
-function updateUL() {
-  userLocation = $('#startCity').val() + ', ' + $('#startState').val();
-  localStorage.setItem('userLocation', JSON.stringify(userLocation));
-}
 
 
 
