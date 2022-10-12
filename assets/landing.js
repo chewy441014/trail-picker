@@ -1,4 +1,4 @@
-onLoad();
+
 
 // initialize global variables
 var userLocation = "";
@@ -8,6 +8,7 @@ var recentSearches = {
   searches: []
 };
 
+onLoad();
 
 function onLoad() {
   modalLink();
@@ -17,20 +18,20 @@ function onLoad() {
   });
   $('#submit-search').on('click', updateUS);
   $('#updateBtn').on('click', updateUL);
-  loadLocalStorage();
   displayBackgroundImage();
+  loadLocalStorage();
 }
 
 function loadLocalStorage() {
-  if (JSON.parse(localStorage.getItem('userLocation'))) {
-    // if there exists some localstorage, assign the value of the search history to it
-    userLocation = JSON.parse(localStorage.getItem('userLocation'));
-    
-  } 
-  else {
-    // if not, create an empty one
+
+  if (JSON.parse(localStorage.getItem('userLocation')) === null || JSON.parse(localStorage.getItem('userLocation')) === undefined){
     localStorage.setItem('userLocation', JSON.stringify(userLocation));
   }
+
+  else{
+    userLocation = JSON.parse(localStorage.getItem('userLocation'));
+  }
+
 
   if (JSON.parse(localStorage.getItem('userSearch'))) {
     // if there exists some localstorage, assign the value of the search history to it
@@ -124,7 +125,7 @@ function updateUS() {
 
 
 
-  // window.location.assign('./results_page.html');
+  window.location.assign('./results_page.html');
 }
 
 function updateUL() {
