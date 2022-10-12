@@ -13,8 +13,10 @@ function onLoad() {
   loadLocalStorage();
   displayBackgroundImage();
   getLatLon(userLocation);
-  getForecast(userLocation);
+  generateWeatherCard()
   findParksRelatedTo(userSearch, locationData);
+  initMap();
+  
 }
 
 function loadLocalStorage() {
@@ -57,28 +59,8 @@ function getForecast(userLocation) {
     url: requestUrl,
     method: 'GET',
   }).then(function (response) {
-    // console.log('AJAX Response \n-------------');
-    // console.log(response);
-    // console.log(response.city_name); // string city name
-    // console.log(response.lat); // string latitude
-    // console.log(response.lon); // string longitude
-    // console.log(response.data); // array of sixteen objects. Each object is the weather data for one day
-    // console.log(response.data[0].temp); // average temp for day 0
-    // console.log(response.data[0].pop); // percent chance of rain
-    // console.log(response.data[0].high_temp); // temp high
-    // console.log(response.data[0].low_temp); // temp low
-    // console.log(response.data[0].rh); // relative humidity
-    // console.log(response.data[0].weather.icon); // weather icon code
-    // console.log(response.data[0].weather.description); // weather description
-    // console.log(response.data[0].ts); // unix time stamp
-    // console.log(response.data[0].wind_spd)
-    // console.log(response.data[0].precip)
-    // console.log(response.data[0].snow)
-    // console.log(response.data[0].clouds)
-    // console.log(response.data[0].vis) //visibility
-    // console.log(response.data[0].ozone)
-    // console.log(response.data[0].sunrise_ts)
     weatherData = response;
+    updateWeather();
   })
 }
 
@@ -88,7 +70,6 @@ function getForecast(userLocation) {
 
 function findParksRelatedTo(searchTerm) {
   var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  console.log(requestUrl);
   // get the parks related to the search term gives parkCode fairly limited
   /*
   var requestUrl = 'https://developer.nps.gov/api/v1/activities?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
@@ -116,7 +97,6 @@ function findParksRelatedTo(searchTerm) {
     url: requestUrl,
     method: 'GET',
   }).then(function (response) {
-    // console.log(response);
     parkData = response;
     sortParkData(response);
     displayResults();
@@ -128,25 +108,23 @@ function findParksRelatedTo(searchTerm) {
 // another example https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=KEY
 // MapQuest route API gives distance as well as some other stuff
 // Michael's API key Q87JNminvctmB5QAimcXQlzSf33AmhqY
-function getDirections() {
-  var startingPoint = userLocation;
-  var endPoint = "El Paso, TX"; // insert user generated end point taking city and state from park data
-  //var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=' + startingPoint + '&end='+ endPoint + '&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
-  var requestUrl = 'https://www.mapquestapi.com/directions/v2/route?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&from=' + startingPoint + '&to=' + endPoint;
-  // var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
-  $.ajax({
-    url: requestUrl,
-    method: 'GET',
-  }).then(function (response) {
-    // console.log(response);
-    routeData = response;
-    displayMap(startingPoint, endPoint);
-  });
-}
+// function getDirections(startingPoint, endPoint) {
+//   // var endPoint = "El Paso, TX"; // insert user generated end point taking city and state from park data
+//   //var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=' + startingPoint + '&end='+ endPoint + '&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+//   var requestUrl = 'https://www.mapquestapi.com/directions/v2/route?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&from=' + startingPoint + '&to=' + endPoint;
+//   // var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+//   $.ajax({
+//     url: requestUrl,
+//     method: 'GET',
+//   }).then(function (response) {
+//
+//     routeData = response;
+//     displayMap(startingPoint, endPoint);
+//   });
+// }
 
 function getLatLon(userLocation) {
   var searchTerm = userLocation;
-  console.log(searchTerm);
   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
     url: requestUrl,
@@ -154,20 +132,20 @@ function getLatLon(userLocation) {
   }).then(function (response) {
     locationData = response.results[0].locations[0].latLng;
     localStorage.setItem('locationData', JSON.stringify(locationData));
-    // console.log(locationData);
   })
 }
 
-function displayMap(startPoint, endPoint) {
+function initMap () {
   L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
-
   // 'map' refers to a <div> element with the ID map
   L.mapquest.map('map', {
-    center: [37.7749, -122.4194],
+    center: [locationData.lat, locationData.lng],
     layers: L.mapquest.tileLayer('map'),
     zoom: 12
   });
+}
 
+function displayMap(startPoint, endPoint) {
   var directions = L.mapquest.directions();
   directions.route({
     start: startPoint,
@@ -219,7 +197,6 @@ function displayBackgroundImage() {
     "./assets/images/background_images/white_sands.jpg"
   ]
   var backgroundImage = imageArr[Math.floor(imageArr.length * Math.random())];
-  console.log(backgroundImage);
   $('body').css('background-image', 'url(' + backgroundImage + ')');
 }
 
@@ -244,49 +221,31 @@ function displayResults() {
       parkDistance,
     );
     resultsColumn.append(resultItemCard);
-    // displayParkDetails(i);
-    // console.log(parkData.data[i]);
-
-
-    //pass parameter here - create a function to log data - fetch  
   }
   modalLink();
-  //console.log(i);
+
 }
 // Function to display Park Details
 function displayParkDetails(findIndexOf) {
-  console.log(typeof findIndexOf);
+  
   var j = parseInt(findIndexOf);
-  console.log(j);
   // //appending park details to modal
-  console.log(parkData.data[j].fullName);
+
+  displayMap(userLocation, parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode);
+  getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode)
 
   document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
   document.getElementById("park-desc").innerHTML = parkData.data[j].description;
   document.getElementById("park-details").innerHTML =
     '<ul><li><a href=' + parkData.data[j].url + '>Park Website</a></li>Activities: ' + parkData.data[j].activities[0].name + '<li></li><li></li><li></li>';
-  // console.log(parkData.data[findIndexOf].url);
-
 }
-
-//   distance
-//     link
-//     activitiesList
-//     parkDescription
-//     campGround
-//     visitorCenter
-//   console.log(i);
-// }
-
 
 function updateWeather() {
   // for each of the five days for the forecast
   for (let i = 0; i < 5; i++) {
     // for each weather element, set the appropriate value
     var currentCard = $(`#day${i + 1}`);
-    console.log(currentCard);
     var weatherSpans = currentCard.find("span");
-    console.log(weatherSpans)
     // weathderData.data[i] is the i-th day's weather data
     $(weatherSpans[0]).text(weatherData.data[i].temp + " " + String.fromCharCode(186) + "C "); // temp data
     $(weatherSpans[1]).text(weatherData.data[i].wind_spd + " m/s"); // wind data
@@ -338,15 +297,6 @@ function generateWeatherCard() {
     var myVis = $("<p>");
     myVis.html('Visibility: <span id="Visibility' + `${i + 1}` + '"></span>');
     myCard.append(myTemp, myWind, myHumidity, myPOP, myMoon, myIcon, myDesc, myVis);
-   console.log(myCard);
-   console.log(weatherSection);
     weatherSection.append(myCard);
-
   }
-
-
-
-
-
-  updateWeather();
 }
