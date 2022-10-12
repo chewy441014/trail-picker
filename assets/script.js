@@ -124,7 +124,7 @@ function getDirections() {
     // console.log(response);
     routeData = response;
     displayMap(startingPoint, endPoint);
-  })
+  });
 
 }
 
@@ -156,6 +156,9 @@ function displayMap(startPoint, endPoint) {
     end: endPoint
   });
 }
+
+
+
 
 // var dropdown = document.querySelector('.dropdown');
 // dropdown.addEventListener('click', function(event) {
@@ -228,8 +231,7 @@ function displayResults() {
 
   for (i = 0; i < 5; i++) {
 
-
-    var resultItemCard = $('<div>').addClass('card active-border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
+    var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
     //   resultItemCard.data-target = 'detail-modal'
     var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
     var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
@@ -244,8 +246,20 @@ function displayResults() {
       parkDistance,
     );
     resultsColumn.append(resultItemCard);
+    displayParkDetails(i);
   }
   modalLink();
+  console.log(i);
+}
+// Function to display Park Details
+function displayParkDetails(i) {
+  // distance
+  // link
+  // activitiesList
+  // parkDescription
+  // campGround
+  // visitorCenter
+  console.log(i);
 }
 
 

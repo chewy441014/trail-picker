@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Parks List</title>
+    <link rel="stylesheet" href="./assets/reset.css">
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/style.css">
     <style>body { background-image: url("./assets/images/5D08A7E6-155D-451F-67E900607CDE1EADOriginal.jpg")}</style>
@@ -14,27 +16,113 @@
     <div class="modal" id="detail-modal">
       <div class="modal-background">
 
-      </div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <!-- Content ... -->
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
-        </footer>
-      </div>
     </div>
-    
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Modal title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+          <div class="columns">
+            <div class="column">
+              Weather Data
+            </div>
+            <div class="column" id="map">
+              
+            </div>
+          </div>
+          <div>
+            Weather Data
+          Temperature
+          Humidity
+          Visibility
+          </div>
+        <section class="columns">
+
+
+
+          <div class="column">
+            <!-- // here is the park data and map data// -->
+          </div>
+        </section>
+        <section class="columns">
+          <div class="column">
+            <!-- // here is the weather data -->
+            <p>Temprature 55 C</p>
+            <p>Wind</p>
+            <p>Humidity 70%</p>
+            <p>Chance of Rain 70%</p>
+            <p>Moon Cycle</p>
+            <p>Weather icon</p>
+            <p>Description: sunny</p>
+            <p>Visiblity : clear</p>
+          </div>
+          <div class="column">
+            <!-- // here is the weather data -->
+            <p>Temprature 55 C</p>
+            <p>Wind</p>
+            <p>Humidity 70%</p>
+            <p>Chance of Rain 70%</p>
+            <p>Moon Cycle</p>
+            <p>Weather icon</p>
+            <p>Description: sunny</p>
+            <p>Visiblity : clear</p>
+          </div>
+          <div class="column">
+            <!-- // here is the weather data -->
+            <p>Temprature 55 C</p>
+            <p>Wind</p>
+            <p>Humidity 70%</p>
+            <p>Chance of Rain 70%</p>
+            <p>Moon Cycle</p>
+            <p>Weather icon</p>
+            <p>Description: sunny</p>
+            <p>Visiblity : clear</p>
+          </div>
+          <div class="column">
+            <!-- // here is the weather data -->
+            <p>Temprature 55 C</p>
+            <p>Wind</p>
+            <p>Humidity 70%</p>
+            <p>Chance of Rain 70%</p>
+            <p>Moon Cycle</p>
+            <p>Weather icon</p>
+            <p>Description: sunny</p>
+            <p>Visiblity : clear</p>
+          </div>
+          <div class="column">
+            <!-- // here is the weather data -->
+            <p>Temprature 55 C</p>
+            <p>Wind</p>
+            <p>Humidity 70%</p>
+            <p>Chance of Rain 70%</p>
+            <p>Moon Cycle</p>
+            <p>Weather icon</p>
+            <p>Description: sunny</p>
+            <p>Visiblity : clear</p>
+          </div>
+        </section>
+
+
+
+
+
+
+
+
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Save changes</button>
+        <button class="button">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
   <section class="section is-flex is-align-items-center">
     <div class="container is-vcentered">
       <div class="columns is-justify-content-center">
         <div class="column" id="results-column"></div>
-      </div>              
+      </div>
     </div>
 
     <!-- <div class="column is-one-third">
@@ -50,6 +138,7 @@
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
 <script src="./assets/bulma.js"></script>
 <script src="./assets/script.js"></script>
 
