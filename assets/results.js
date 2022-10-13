@@ -5,6 +5,7 @@ var routeData;
 var userLocation = "";
 var userSearch = "";
 var locationData = {};
+var myMap;
 
 onLoad();
 
@@ -14,9 +15,7 @@ function onLoad() {
   displayBackgroundImage();
   getLatLon(userLocation);
   generateWeatherCard()
-  findParksRelatedTo(userSearch, locationData);
-  initMap();
-  
+  findParksRelatedTo(userSearch, locationData);  
 }
 
 function loadLocalStorage() {
@@ -104,24 +103,8 @@ function findParksRelatedTo(searchTerm) {
 }
 
 // MapQuest API
-// example https://www.mapquestapi.com/directions/v2/route?key=KEY&from=Clarendon Blvd,Arlington,VA&to=2400+S+Glebe+Rd,+Arlington,+VA
-// another example https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=KEY
 // MapQuest route API gives distance as well as some other stuff
 // Michael's API key Q87JNminvctmB5QAimcXQlzSf33AmhqY
-// function getDirections(startingPoint, endPoint) {
-//   // var endPoint = "El Paso, TX"; // insert user generated end point taking city and state from park data
-//   //var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=' + startingPoint + '&end='+ endPoint + '&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
-//   var requestUrl = 'https://www.mapquestapi.com/directions/v2/route?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&from=' + startingPoint + '&to=' + endPoint;
-//   // var requestUrl = 'https://www.mapquestapi.com/staticmap/v5/map?start=New+York,NY&end=Washington,DC&size=600,400@2x&key=Q87JNminvctmB5QAimcXQlzSf33AmhqY';
-//   $.ajax({
-//     url: requestUrl,
-//     method: 'GET',
-//   }).then(function (response) {
-//
-//     routeData = response;
-//     displayMap(startingPoint, endPoint);
-//   });
-// }
 
 function getLatLon(userLocation) {
   var searchTerm = userLocation;
@@ -137,8 +120,10 @@ function getLatLon(userLocation) {
 
 function initMap () {
   L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
+  console.log("map initialized")
+  console.log([locationData.lat, locationData.lng])
   // 'map' refers to a <div> element with the ID map
-  L.mapquest.map('map', {
+  myMap = L.mapquest.map('map', {
     center: [locationData.lat, locationData.lng],
     layers: L.mapquest.tileLayer('map'),
     zoom: 12
@@ -146,12 +131,20 @@ function initMap () {
 }
 
 function displayMap(startPoint, endPoint) {
+  console.log("map updated")
   var directions = L.mapquest.directions();
   directions.route({
     start: startPoint,
     end: endPoint
   });
 }
+
+// function closeMap() {
+//   // if mapInstance && mapInstance.remove
+//   // map.off()
+//   // map.remove()
+//   myMap.remove();
+// }
 
 // Function to get the geographical distance between two points (lat, lon)
 // https://en.wikipedia.org/wiki/Geographical_distance
@@ -227,12 +220,16 @@ function displayResults() {
 }
 // Function to display Park Details
 function displayParkDetails(findIndexOf) {
+  if (myMap) {
+    myMap.remove();
+  }
   
+  initMap();
   var j = parseInt(findIndexOf);
   // //appending park details to modal
 
   displayMap(userLocation, parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode);
-  getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode)
+  //getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode)
 
   document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
   document.getElementById("park-desc").innerHTML = parkData.data[j].description;
