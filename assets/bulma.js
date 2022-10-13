@@ -1,7 +1,6 @@
+// gets all the modal buttons setup, placed inside a function so it can be called on the results page
 function modalLink() {
-  // pass same infomation or rename (in parameter)
-  // same notation with .details
-  // JS for Location Modal (Credit to Bulma docs example)
+  // JS for Location Modal (Credit to Bulma)
   
     // Functions to open and close a modal
     function openModal($el) {
@@ -24,6 +23,7 @@ function modalLink() {
       $trigger.addEventListener('click', () => {
         openModal($target);
         let findIndexOf = $trigger.id.replace('card', '');
+      // if the button which was clicked was a search result, display the park details regarding that entry of the results by index and open the modal
       if (findIndexOf) {
         displayParkDetails(findIndexOf);     
       }

@@ -5,23 +5,25 @@ var recentSearches = {
   locations: [],
   searches: []
 };
-var i = 0;
 
+// perform these operations first
 onLoad();
 
+// function for all the things to happen on load
 function onLoad() {
   modalLink();
+  // setup the modal on click operations 
   $('#submit-search').on('click', updateUS);
   $('#updateBtn').on('click', updateUL);
+  // setup bottun functions for the buttons on the index page
   displayBackgroundImage();
+  // display a random background issue
   loadLocalStorage();
   loadRecents();
 }
 
+// load local storage to global variables
 function loadLocalStorage() {
-
-  // if there exists some localstorage, assign the value of the search history to it
-  // if not, create an empty one
   if (JSON.parse(localStorage.getItem('userLocation'))) {
     userLocation = JSON.parse(localStorage.getItem('userLocation'));
   }
@@ -44,18 +46,15 @@ function loadLocalStorage() {
   }
 }
 
+// load the recent searches and setup the buttons to show them
 function loadRecents() {
-
   for (var i = 0; i < recentSearches.locations.length; i++) {
-
     $(`#recent${i}`).text(recentSearches.searches[i] + " in " + recentSearches.locations[i]);
     $(`#recent${i}`).css('display', 'inline');
-
   }
 }
 
-// Validation for user inputs
-
+// Validation for user location, occurs first
 function getLatLon(searchTerm) {
   console.log(searchTerm);
   var requestUrl = 'https://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
@@ -103,6 +102,7 @@ function changeLoc(e){
   findParksRelatedTo(userSearch);
 }
 
+// validate the user search term, before showing results
 function findParksRelatedTo(searchTerm) {
   console.log(searchTerm);
   var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
@@ -123,16 +123,12 @@ function findParksRelatedTo(searchTerm) {
   });
 }
 
-// Landing Page Button Functionality
 // Local storage data for recent searches is going to be pulled from local storage and rendered on user click.
-
 function recentSearch(index) {
   userLocation = recentSearches.locations[index];
   userSearch = recentSearches.searches[index];
-
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
   localStorage.setItem('userLocation', JSON.stringify(userLocation));
-
   getLatLon(userLocation, userSearch);
 }
 
@@ -154,50 +150,40 @@ function displayBackgroundImage() {
 }
 
 //Michael - Dynamic HTML generation for results Page 
-
 function catchBadInput() {
   $('.errorModal').addClass('is-active')
 }
 
+// function runs on search bar button input, starts validation and searches
 function updateUS() {
   if (userSearch = $('#search-bar').val() === "" || $('#startCity').val() === "" || $('#startState') === "") {
     catchBadInput();
     return null;
   }
-
   userSearch = $('#search-bar').val();
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
   console.log('validating responses... ');
   getLatLon(userLocation)
 }
 
+// saves the global variables to local storage, ensures only three searches are saved, deleting the oldest first
 function saveRotateSearch() {
   if (recentSearches.locations.length < 3 && recentSearches.searches.length < 3) {
-
     recentSearches.locations.push(userLocation);
     recentSearches.searches.push(userSearch);
     console.log(recentSearches);
   }
   else {
-
     recentSearches.locations = recentSearches.locations.slice(1);
     recentSearches.searches = recentSearches.searches.slice(1);
-
     recentSearches.locations.push(userLocation);
     recentSearches.searches.push(userSearch);
-
     console.log(recentSearches);
   }
   localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
-
-
 }
 
+// function runs on update location button click, saves the user location to a global variable, saved as local storage after validation
 function updateUL() {
   userLocation = $('#startCity').val() + ', ' + $('#startState').val();
 }
-
-
-
-
-

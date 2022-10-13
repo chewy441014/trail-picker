@@ -7,38 +7,42 @@ var userSearch = "";
 var locationData = {};
 var myMap;
 
+// perform these operations first
 onLoad();
 
+// function for all the things to happen on load
 function onLoad() {
+  // setup the modal on click operations 
   modalLink();
+  // load local storage to get global variables if available
   loadLocalStorage();
+  // display the random background image
   displayBackgroundImage();
+  // get the latitude and longitude from the user's location
   getLatLon(userLocation);
+  // create the html dynamically to fill the search result modal with weather information
   generateWeatherCard()
+  // search for the related search terms so the results can be displayed
   findParksRelatedTo(userSearch, locationData);
+  // setup the onclick function for the search again button
   $('#search-again-btn').on('click', searchAgain);  
 }
 
+// load local storage to the global variables 
 function loadLocalStorage() {
   if (JSON.parse(localStorage.getItem('userLocation'))) {
-    // if there exists some localstorage, assign the value of the search history to it
     userLocation = JSON.parse(localStorage.getItem('userLocation'));
   } else {
-    // if not, create an empty one
     localStorage.setItem('userLocation', JSON.stringify(userLocation));
   }
   if (JSON.parse(localStorage.getItem('userSearch'))) {
-    // if there exists some localstorage, assign the value of the search history to it
     userSearch = JSON.parse(localStorage.getItem('userSearch'));
   } else {
-    // if not, create an empty one
     localStorage.setItem('userSearch', JSON.stringify(userSearch));
   }
   if (JSON.parse(localStorage.getItem('locationData'))) {
-    // if there exists some localstorage, assign the value of the search history to it
     locationData = JSON.parse(localStorage.getItem('locationData'));
   } else {
-    // if not, create an empty one
     localStorage.setItem('locationData', JSON.stringify(locationData));
   }
 }
@@ -48,12 +52,6 @@ function loadLocalStorage() {
 
 function getForecast(userLocation) {
   var cityName = userLocation;
-  /* 
-      &lat=38.123&lon=-78.543
-      &city=Raleigh&country=US
-      &city=Raleigh,NC
-      &city=Raleigh,North+Carolina
-  */
   var requestUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?city=' + cityName + '&key=9d63d6881d944cc0b56b419592045f7b'
   $.ajax({
     url: requestUrl,
@@ -65,34 +63,11 @@ function getForecast(userLocation) {
 }
 
 // National Parks Service API 
-// THIS API IS CURRENTLY IN DEVELOPMENT maybe we can contribute to it sometime
 // Preston's API Key VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG
 
 function findParksRelatedTo(searchTerm) {
   var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
   // get the parks related to the search term gives parkCode fairly limited
-  /*
-  var requestUrl = 'https://developer.nps.gov/api/v1/activities?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  not sure if this one is useful
-  var requestUrl = 'https://developer.nps.gov/api/v1/alerts?parkCode=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  get alerts by parkCode 
-  var requestUrl = 'https://developer.nps.gov/api/v1/amenities?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  unfortunately this one doesn't seem to be useful, test it out more
-  var requestUrl = 'https://developer.nps.gov/api/v1/campgrounds?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  get campgrounds by parkCode
-  var requestUrl = 'httpss://developer.nps.gov/api/v1/events?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  get events by parkCode
-  var requestUrl = 'https://developer.nps.gov/api/v1/parkinglots?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  get parkinglot info by parkCode
-  var requestUrl = 'https://developer.nps.gov/api/v1/parks?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  search for parks by some text, gives the park code and tons of data, as well as lat & lon (for weather) for results ALSO SEARCHABLE BY PARKCODE
-  var requestUrl = 'https://developer.nps.gov/api/v1/places?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  search for places and related parks by some text, gives lat and lon, and parkCode for related parks ALSO SEARCHABLE BY PARKCODE
-  var requestUrl = 'https://developer.nps.gov/api/v1/thingstodo?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  search for things to do by text, parkcode, gives parkcode, lat and lon
-  var requestUrl = 'https://developer.nps.gov/api/v1/visitorcenters?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
-  get visitor center by parkcode or search text, gives lat lon parkcode, hours, address, desc
-  */
   $.ajax({
     url: requestUrl,
     method: 'GET',
@@ -119,6 +94,7 @@ function getLatLon(userLocation) {
   })
 }
 
+// initialize the map object
 function initMap() {
   L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
   console.log("map initialized")
@@ -131,6 +107,7 @@ function initMap() {
   });
 }
 
+// display the map and show the directions
 function displayMap(startPoint, endPoint) {
   console.log("map updated")
   var directions = L.mapquest.directions();
@@ -139,13 +116,6 @@ function displayMap(startPoint, endPoint) {
     end: endPoint
   });
 }
-
-// function closeMap() {
-//   // if mapInstance && mapInstance.remove
-//   // map.off()
-//   // map.remove()
-//   myMap.remove();
-// }
 
 // Function to get the geographical distance between two points (lat, lon)
 // https://en.wikipedia.org/wiki/Geographical_distance
@@ -171,6 +141,7 @@ function sortParkData(completeResponse) {
     var distanceCal = getDistance(userLocation, parkCoords);
     completeResponse.data[i].distance = distanceCal;
   }
+  // sort the data and assign it to the global variable, sorted by distance from the user location
   completeResponse.data.sort(compareFn);
   parkData = completeResponse;
   function compareFn(a, b) {
@@ -199,13 +170,11 @@ function displayResults(searchTerm, userLocation) {
 $('#search-terms').text('Displaying results for ' + searchTerm + ' near ' + userLocation + '.');
   var resultsColumn = $('#results-column');
   for (i = 0; i < 10; i++) {
-
     var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
     var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
     var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
     var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
     var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center has-text-weight-bold').text('Distance: ' + parkData.data[i].distance + ' mi');
-
     resultItemCard.append(
       parkName,
       parkState,
@@ -215,26 +184,23 @@ $('#search-terms').text('Displaying results for ' + searchTerm + ' near ' + user
     resultsColumn.append(resultItemCard);
   }
   modalLink();
-
 }
+
 // Function to display Park Details
 function displayParkDetails(findIndexOf) {
   if (myMap) {
     myMap.remove();
   }
-  
   initMap();
   var indexOfData = parseInt(findIndexOf);
-  // //appending park details to modal
-
   displayMap(userLocation, parkData.data[indexOfData].addresses[0].city + ", " + parkData.data[indexOfData].addresses[0].stateCode);
   getForecast(parkData.data[indexOfData].addresses[0].city + ", " + parkData.data[indexOfData].addresses[0].stateCode);
-
   $("#park-name").text(parkData.data[indexOfData].fullName);
   $("#park-desc").text(parkData.data[indexOfData].description);
   $("#park-details").html('<ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[indexOfData].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[indexOfData].url + ' target=_blank>Park Website</a></li>');
 }
 
+// update the weather with the most recent weatherData
 function updateWeather() {
   // for each of the five days for the forecast
   for (let i = 0; i < 5; i++) {
@@ -253,6 +219,7 @@ function updateWeather() {
   }
 }
 
+// generate the weather cards so that they look like: 
 /*
 <div class="column" id="day1">
             <!-- // here is the weather data -->
@@ -266,7 +233,6 @@ function updateWeather() {
             <p>Visibility : <span id="Visibility1"></span></p>
           </div>
 */
-
 function generateWeatherCard() {
   // generate five cards with appropriate default text for filling with data
   var weatherSection = $("#weather");
@@ -298,6 +264,7 @@ function generateWeatherCard() {
   }
 }
 
+// move to the previous page to search again
 function searchAgain() {
   window.location.assign('./index.html');
 }
