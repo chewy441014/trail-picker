@@ -5,7 +5,7 @@ var recentSearches = {
   locations: [],
   searches: []
 };
-var i=0;
+var i = 0;
 
 onLoad();
 
@@ -24,43 +24,43 @@ function onLoad() {
 
 function loadLocalStorage() {
 
-   // if there exists some localstorage, assign the value of the search history to it
-    // if not, create an empty one
-  if (JSON.parse(localStorage.getItem('userLocation'))){
+  // if there exists some localstorage, assign the value of the search history to it
+  // if not, create an empty one
+  if (JSON.parse(localStorage.getItem('userLocation'))) {
     userLocation = JSON.parse(localStorage.getItem('userLocation'));
   }
-  else{
+  else {
     localStorage.setItem('userLocation', JSON.stringify(userLocation));
   }
 
   if (JSON.parse(localStorage.getItem('userSearch'))) {
     userSearch = JSON.parse(localStorage.getItem('userSearch'));
-  } 
+  }
   else {
     localStorage.setItem('userSearch', JSON.stringify(userSearch));
   }
 
   if (JSON.parse(localStorage.getItem('recentSearches'))) {
     recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
-  } 
+  }
   else {
     localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
   }
 }
 
-function loadRecents(){
-  
-  for(var i = 0; i < recentSearches.locations.length; i++){
+function loadRecents() {
 
-    $(`#recent${i}`).text(recentSearches.searches[i]+" in "+recentSearches.locations[i]);
-    $(`#recent${i}`).css('display','inline');
+  for (var i = 0; i < recentSearches.locations.length; i++) {
+
+    $(`#recent${i}`).text(recentSearches.searches[i] + " in " + recentSearches.locations[i]);
+    $(`#recent${i}`).css('display', 'inline');
     // console.log('#recent'+ i);
   }
 }
 
 // Validation for user inputs
 
-function getLatLon(searchTerm, userSear) {
+function getLatLon(searchTerm) {
   console.log(searchTerm);
   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
@@ -74,7 +74,10 @@ function getLatLon(searchTerm, userSear) {
       catchBadInput()
     } else {
       console.log("Location search ok")
-      findParksRelatedTo(userSear)
+      // Modal is opened to select location results from the api (for validation reasons)
+      
+      $('.validationModal').addClass('is-active')
+
     }
   });
 }
@@ -93,7 +96,8 @@ function findParksRelatedTo(searchTerm) {
       catchBadInput()
     } else {
       console.log("Park search ok")
-      // window.location.assign('./results_page.html');
+      saveRotateSearch()
+      window.location.assign('./results_page.html');
     }
   });
 }
@@ -107,7 +111,7 @@ function recentSearch(index) {
 
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
   localStorage.setItem('userLocation', JSON.stringify(userLocation));
-  
+
   getLatLon(userLocation, userSearch);
 }
 
@@ -130,19 +134,23 @@ function displayBackgroundImage() {
 
 //Michael - Dynamic HTML generation for results Page 
 
-function catchBadInput(){
+function catchBadInput() {
   $('.errorModal').addClass('is-active')
 }
 
 function updateUS() {
-  if(userSearch = $('#search-bar').val() === "" || $('#startCity').val() === "" || $('#startState') === ""){
+  if (userSearch = $('#search-bar').val() === "" || $('#startCity').val() === "" || $('#startState') === "") {
     catchBadInput();
     return null;
   }
 
   userSearch = $('#search-bar').val();
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
+  console.log('validating responses... ');
+  getLatLon(userLocation)
+}
 
+function saveRotateSearch() {
   if (recentSearches.locations.length < 3 && recentSearches.searches.length < 3) {
 
     recentSearches.locations.push(userLocation);
@@ -160,10 +168,8 @@ function updateUS() {
     console.log(recentSearches);
   }
   localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
-  // validate the user's responses before calling window.location.assign
-  console.log('validating responses... ');
-  getLatLon(userLocation, userSearch)
 
+  
 }
 
 function updateUL() {
