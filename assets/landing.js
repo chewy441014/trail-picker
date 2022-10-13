@@ -18,7 +18,7 @@ function onLoad() {
   $('#updateBtn').on('click', updateUL);
   displayBackgroundImage();
   loadLocalStorage();
-  loadRecents();
+  // loadRecents();
 }
 
 function loadLocalStorage() {
@@ -58,7 +58,7 @@ function loadLocalStorage() {
 
 // Validation for 
 
-function getLatLon(searchTerm) {
+function getLatLon(searchTerm, userSear) {
   console.log(searchTerm);
   var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
@@ -69,10 +69,10 @@ function getLatLon(searchTerm) {
     console.log(locationData);
     if (Object.is(locationData, undefined) || locationData.results.length === 0) {
       console.log("Location search invalid")
-      return false;
+      catchBadInput()
     } else {
       console.log("Location search ok")
-      return true;
+      findParksRelatedTo(userSear)
     }
   });
 }
@@ -88,20 +88,12 @@ function findParksRelatedTo(searchTerm) {
     console.log(parkData);
     if (Object.is(parkData, undefined) || parkData.data.length === 0) {
       console.log("Park search invalid")
-      return false; // validation failed
+      catchBadInput()
     } else {
       console.log("Park search ok")
-      return true; // validation ok
+      window.location.assign('./results_page.html');
     }
   });
-}
-
-function checkValidation(search, local) {
-  console.log(search)
-  console.log(local)
-  if (search && local) {
-    window.location.assign('./results_page.html');
-  }
 }
 
 // Landing Page Button Functionality
@@ -165,18 +157,9 @@ function updateUS() {
     console.log(recentSearches);
   }
   localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
-
-
   // validate the user's responses before calling window.location.assign
   console.log('validating responses... ');
-
-  var searchValid = findParksRelatedTo(userSearch);
-  var localValid = getLatLon(userLocation);
-  setTimeout(function() {
-    checkValidation(searchValid, localValid)
-  }, 3000);
-
-  console.log("done");
+  getLatLon(userLocation, userSearch)
 
 }
 
