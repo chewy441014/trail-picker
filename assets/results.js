@@ -80,7 +80,7 @@ function findParksRelatedTo(searchTerm) {
   unfortunately this one doesn't seem to be useful, test it out more
   var requestUrl = 'https://developer.nps.gov/api/v1/campgrounds?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
   get campgrounds by parkCode
-  var requestUrl = 'https://developer.nps.gov/api/v1/events?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
+  var requestUrl = 'httpss://developer.nps.gov/api/v1/events?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
   get events by parkCode
   var requestUrl = 'https://developer.nps.gov/api/v1/parkinglots?q=' + searchTerm + '&api_key=VsW5K0iIIgUoBLJJejWXL1qmtDOOnKKy7fx22tfG';
   get parkinglot info by parkCode
@@ -109,7 +109,7 @@ function findParksRelatedTo(searchTerm) {
 
 function getLatLon(userLocation) {
   var searchTerm = userLocation;
-  var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
+  var requestUrl = 'https://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
     url: requestUrl,
     method: 'GET',
