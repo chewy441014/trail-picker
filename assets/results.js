@@ -246,9 +246,9 @@ function updateWeather() {
     $(weatherSpans[1]).text(weatherData.data[i].wind_spd + " m/s"); // wind data
     $(weatherSpans[2]).text(weatherData.data[i].rh + " %"); // humidity data
     $(weatherSpans[3]).text(weatherData.data[i].pop + " %"); // rain data
-    $(weatherSpans[5]).html('<img src="https://www.weatherbit.io/static/img/icons/' + weatherData.data[i].weather.icon + '.png" alt="' + weatherData.data[i].weather.description + '">'); // weather icon]
-    $(weatherSpans[6]).text(weatherData.data[i].weather.description); // Description
-    $(weatherSpans[7]).text(weatherData.data[i].vis + " km"); // visibility
+    $(weatherSpans[4]).html('<img src="https://www.weatherbit.io/static/img/icons/' + weatherData.data[i].weather.icon + '.png" alt="' + weatherData.data[i].weather.description + '">'); // weather icon]
+    $(weatherSpans[5]).text(weatherData.data[i].weather.description); // Description
+    $(weatherSpans[6]).text(weatherData.data[i].vis + " km"); // visibility
   }
 }
 
@@ -286,7 +286,7 @@ function generateWeatherCard() {
     var myIcon = $("<p>");
     myIcon.html('<span id= "Weathericon' + `${i + 1}` + '"></span>');
     var myDesc = $("<p>");
-    myIcon.html('Description: <span id="Description' + `${i + 1}` + '"></span>');
+    myDesc.html('Description: <span id="Description' + `${i + 1}` + '"></span>');
     var myVis = $("<p>");
     myVis.html('Visibility: <span id="Visibility' + `${i + 1}` + '"></span>');
     myCard.append(myTemp, myWind, myHumidity, myPOP, myIcon, myDesc, myVis);
