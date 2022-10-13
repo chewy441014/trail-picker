@@ -195,8 +195,12 @@ function displayBackgroundImage() {
 }
 
 //Michael - Dynamic HTML generation for results Page 
-function displayResults(searchTerm, userLocation) {
-$('#search-terms').text('Displaying results for ' + searchTerm + ' near ' + userLocation + '.');
+function displayResults() {
+  
+  userSearch = JSON.parse(localStorage.getItem('userSearch'));
+  userLocation = JSON.parse(localStorage.getItem('userLocation'));
+
+$('#search-terms').text('Displaying results for ' + userSearch + ' near ' + userLocation + '.');
   var resultsColumn = $('#results-column');
   for (i = 0; i < 10; i++) {
 
