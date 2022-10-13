@@ -195,7 +195,7 @@ function displayBackgroundImage() {
 
 //Michael - Dynamic HTML generation for results Page 
 function displayResults() {
-
+console.log(parkData);
   var resultsColumn = $('#results-column');
   for (i = 0; i < 10; i++) {
 
@@ -204,7 +204,7 @@ function displayResults() {
     var parkName = $('<p>').addClass('title is-4 ml-2 mt-1').text(parkData.data[i].fullName);
     var parkState = $('<p>').addClass('subtitle is-6 ml-2 mb-2').text(parkData.data[i].states);
     var parkDescription = $('<p>').addClass('ml-2').text(parkData.data[i].description.slice(0, 75) + '...');
-    var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center').text('Distance: ' + parkData.data[i].distance + ' mi');
+    var parkDistance = $('<p>').addClass('ml-2 mb-1 text-center has-text-weight-bold').text('Distance: ' + parkData.data[i].distance + ' mi');
     // var newButton = $('<button>').addClass("js-modal-trigger button is-info is-outlined").attr('data-target', 'detail-modal').text('Get Details')
 
     resultItemCard.append(
@@ -233,7 +233,7 @@ function displayParkDetails(findIndexOf) {
 
   $("#park-name").text(parkData.data[j].fullName);
   $("#park-desc").text(parkData.data[j].description);
-  $("#park-details").html('<ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[j].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[j].url + ' target=_blank>Park Website</a></li><li></li><li></li>');
+  $("#park-details").html('<ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[j].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[j].url + ' target=_blank>Park Website</a></li>');
 }
 
 function updateWeather() {
