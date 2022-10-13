@@ -167,7 +167,7 @@ function displayBackgroundImage() {
 
 //Michael - Dynamic HTML generation for results Page 
 function displayResults() {
-  
+  console.log(parkData);
   userSearch = JSON.parse(localStorage.getItem('userSearch'));
   userLocation = JSON.parse(localStorage.getItem('userLocation'));
 
@@ -201,7 +201,7 @@ function displayParkDetails(findIndexOf) {
   getForecast(parkData.data[indexOfData].addresses[0].city + ", " + parkData.data[indexOfData].addresses[0].stateCode);
   $("#park-name").text(parkData.data[indexOfData].fullName);
   $("#park-desc").text(parkData.data[indexOfData].description);
-  $("#park-details").html('<ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[indexOfData].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[indexOfData].url + ' target=_blank>Park Website</a></li>');
+  $("#park-details").html('<img src=' + parkData.data[indexOfData].images[0].url + '><ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[indexOfData].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[indexOfData].url + ' target=_blank>Park Website</a></li>');
 }
 
 // update the weather with the most recent weatherData
