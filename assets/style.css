@@ -6,6 +6,10 @@ body {
     /* background-image: url("./assets/images/5D08A7E6-155D-451F-67E900607CDE1EADOriginal.jpg"); */
 }
 
+textarea {
+    resize: none;
+}
+
 .container::-webkit-scrollbar {
   width: 12px;
 }
@@ -25,8 +29,14 @@ section {
     height: 100%;
 }
 
+ul {
+    text-align: center;
+}
+
 li {
+    display: inline;
     list-style: none;
+    padding: 20px;
 }
 
 .card {
