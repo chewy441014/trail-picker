@@ -26,7 +26,7 @@ textarea {
 }
 
 section {
-    height: 100%;
+    height: 80%;
 }
 
 ul {
@@ -45,15 +45,15 @@ li {
   }
 
 .container {
-    max-height: 100%;
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 2px;
 }
 
-.column {
+/* .columns {
     max-height: 100%;
-}
+} */
 
 .border {
     border: 4px solid #3C4729;
@@ -90,6 +90,16 @@ li {
 #location-box{
     border-radius: 15px;
 }
+
+#search-again-btn {
+    border: 4px solid #3C4729; 
+    color:#3C4729;
+    background-color: #E0A315;
+    width: 150px;
+    opacity: 0.9;
+}
+
+#search-again-btn::
 
 .landing-page-btns{
     width: 50%;
