@@ -44,6 +44,17 @@ li {
     border-radius: 10px;
   }
 
+p#search-terms {
+    vertical-align: middle;
+    text-align: center;
+    background-color: #E0A315;
+    color: #3C4729;
+    font-weight: bold;
+    padding: 4px;
+    /* border: 4px solid #3C4729; */
+    border-radius: 25px;
+}
+
 .container {
     height: 100%;
     overflow-y: auto;

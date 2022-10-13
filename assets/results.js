@@ -195,8 +195,8 @@ function displayBackgroundImage() {
 }
 
 //Michael - Dynamic HTML generation for results Page 
-function displayResults() {
-console.log(parkData);
+function displayResults(searchTerm, userLocation) {
+$('#search-terms').text('Displaying results for ' + searchTerm + ' near ' + userLocation + '.');
   var resultsColumn = $('#results-column');
   for (i = 0; i < 10; i++) {
 
