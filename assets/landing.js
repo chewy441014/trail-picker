@@ -58,7 +58,7 @@ function loadRecents() {
 
 function getLatLon(searchTerm) {
   console.log(searchTerm);
-  var requestUrl = 'http://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
+  var requestUrl = 'https://www.mapquestapi.com/geocoding/v1/address?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&location=' + searchTerm;
   $.ajax({
     url: requestUrl,
     method: 'GET',
