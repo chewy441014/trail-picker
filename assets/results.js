@@ -118,7 +118,7 @@ function getLatLon(userLocation) {
   })
 }
 
-function initMap () {
+function initMap() {
   L.mapquest.key = 'Q87JNminvctmB5QAimcXQlzSf33AmhqY';
   console.log("map initialized")
   console.log([locationData.lat, locationData.lng])
@@ -197,7 +197,7 @@ function displayBackgroundImage() {
 function displayResults() {
 
   var resultsColumn = $('#results-column');
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 10; i++) {
 
     var resultItemCard = $('<div>').addClass('card border block js-modal-trigger').attr('id', `card${i}`).attr('data-target', 'detail-modal');
     //   resultItemCard.data-target = 'detail-modal'
@@ -229,12 +229,11 @@ function displayParkDetails(findIndexOf) {
   // //appending park details to modal
 
   displayMap(userLocation, parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode);
-  //getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode)
+  //getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode);
 
-  document.getElementById("park-name").innerHTML = parkData.data[j].fullName;
-  document.getElementById("park-desc").innerHTML = parkData.data[j].description;
-  document.getElementById("park-details").innerHTML =
-    '<ul><li><a href=' + parkData.data[j].url + '>Park Website</a></li>Activities: ' + parkData.data[j].activities[0].name + '<li></li><li></li><li></li>';
+  $("#park-name").text(parkData.data[j].fullName);
+  $("#park-desc").text(parkData.data[j].description);
+  $("#park-details").html('<ul><li><a href=' + 'https://www.nps.gov/' + parkData.data[j].parkCode + '/planyourvisit/things2do.htm target=_blank>All Activities</a></li><li><a href=' + parkData.data[j].url + ' target=_blank>Park Website</a></li><li></li><li></li>');
 }
 
 function updateWeather() {

@@ -26,13 +26,12 @@ section {
 }
 
 li {
-    /* display: inline; */
     list-style: none;
 }
 
-.card[data-clickable=true]{
+.card {
     cursor: pointer;
-    max-width: 100%;
+    border-radius: 10px;
   }
 
 .container {
@@ -60,6 +59,7 @@ li {
 
 .modal-card {
     width: 75vw;
+    border-radius: 25px;
 }
 
 #search-box{
@@ -67,7 +67,6 @@ li {
     box-shadow: 0 0 5px 0 ;
     border-radius: 15px;
 }
-
 
 #submit-search{
     width:100%
@@ -80,7 +79,6 @@ li {
 
 #location-box{
     border-radius: 15px;
-    
 }
 
 .landing-page-btns{
