@@ -11,10 +11,6 @@ onLoad();
 
 function onLoad() {
   modalLink();
-  // Launching location modal on page load
-  $(document).ready(function () {
-    $("#location-modal").addClass("is-active");
-  });
   $('#submit-search').on('click', updateUS);
   $('#updateBtn').on('click', updateUL);
   displayBackgroundImage();
@@ -54,7 +50,7 @@ function loadRecents() {
 
     $(`#recent${i}`).text(recentSearches.searches[i] + " in " + recentSearches.locations[i]);
     $(`#recent${i}`).css('display', 'inline');
-    // console.log('#recent'+ i);
+
   }
 }
 
@@ -72,28 +68,39 @@ function getLatLon(searchTerm) {
     if (Object.is(locationData, undefined) || locationData.results.length === 0) {
       console.log("Location search invalid")
       catchBadInput()
-    } else {
+    }
+    else {
       console.log("Location search ok")
       // Modal is opened to select location results from the api (for validation reasons)
       // create and add buttons for the first five elements of locationData if they exist
       var displayLength = Math.min(5, locationData.results.length)
-      for (var i = 0; i < displayLength; i++) {
-        var newLi = $("<li>");
-        var newButton = $("<button>");
-        newButton.addClass("button is-info is-outlined");
-        newButton.on("click", tempfunc()); // point to the function that starts the validation for the search term
-        newButton.text(locationData.results[0].locations[i].adminArea5 + ", " + locationData.results[0].locations[i].adminArea3);
-        newLi.append(newButton);
-        $('#button-container').append(newLi);
-      }
-      $('.validationModal').addClass('is-active');
+        
+        for (var i = 0; i < displayLength; i++) {
+          var newLi = $("<li>");
+          var newButton = $("<button>");
+          newButton.addClass("button is-info is-outlined");
+          newButton.on("click", changeLoc); // point to the function that starts the validation for the search term
+          newButton.text(locationData.results[0].locations[i].adminArea5 + ", " + locationData.results[0].locations[i].adminArea3);
+          newLi.append(newButton);
+          newButton.attr('id', `choice${i}`)
+          $('#button-container').append(newLi);
+        }
+        $('.validationModal').addClass('is-active');
     }
   });
 }
 
-function tempfunc () {
-  // do other stuff too
+function changeLoc(e){
+  // User presses buttons presented in the validation modal
+  // text is pulled from the specific button that was pressed
+  // text is saved over the user input location (is validated at this point)
+  // text is saved to local storage
+  // modal is closed
+  userLocation = $(e.target).text();
+  localStorage.setItem('userLocation', JSON.stringify(userLocation));
   $('#button-container').empty();
+  $('.validationModal').removeClass('is-active');
+  findParksRelatedTo(userSearch);
 }
 
 function findParksRelatedTo(searchTerm) {
@@ -183,12 +190,11 @@ function saveRotateSearch() {
   }
   localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
 
-  
+
 }
 
 function updateUL() {
   userLocation = $('#startCity').val() + ', ' + $('#startState').val();
-  localStorage.setItem('userLocation', JSON.stringify(userLocation));
 }
 
 
