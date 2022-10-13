@@ -75,11 +75,25 @@ function getLatLon(searchTerm) {
     } else {
       console.log("Location search ok")
       // Modal is opened to select location results from the api (for validation reasons)
-      
-      $('.validationModal').addClass('is-active')
-
+      // create and add buttons for the first five elements of locationData if they exist
+      var displayLength = Math.min(5, locationData.results.length)
+      for (var i = 0; i < displayLength; i++) {
+        var newLi = $("<li>");
+        var newButton = $("<button>");
+        newButton.addClass("button is-info is-outlined");
+        newButton.on("click", tempfunc()); // point to the function that starts the validation for the search term
+        newButton.text(locationData.results[0].locations[i].adminArea5 + ", " + locationData.results[0].locations[i].adminArea3);
+        newLi.append(newButton);
+        $('#button-container').append(newLi);
+      }
+      $('.validationModal').addClass('is-active');
     }
   });
+}
+
+function tempfunc () {
+  // do other stuff too
+  $('#button-container').empty();
 }
 
 function findParksRelatedTo(searchTerm) {
