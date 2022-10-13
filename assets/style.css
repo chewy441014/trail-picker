@@ -94,3 +94,12 @@ li {
 .landing-page-btns{
     width: 50%;
 }
+
+#startState{
+    /* max-height: 100px;
+    min-height: 50px; */
+}
+
+#recent0, #recent1, #recent2{
+    display: none;
+}

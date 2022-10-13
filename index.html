@@ -1,68 +1,143 @@
 <!DOCTYPE html>
 <html class="has-background-dark">
-    <head>
-        <meta charset="utf-8">
-        <title>Trail Picker</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./assets/reset.css">
-        <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-        <link rel="stylesheet" href="./assets/style.css">
-    </head>
-    <body class="is-flex is-align-items-center is-justify-content-center is-vcentered">
 
-      
-        <div class="modal" id="location-modal">
-          <div class="modal-background">
-            
+<head>
+  <meta charset="utf-8">
+  <title>Trail Picker</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./assets/reset.css">
+  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body class="is-flex is-align-items-center is-justify-content-center is-vcentered">
+
+
+  <div class="modal" id="location-modal">
+    <div class="modal-background">
+
+    </div>
+    <div class="modal-content" id="location-box">
+      <div class="section has-background-light">
+        <h1>Enter Starting Location for Trip:</h1>
+        <div class="block"></div>
+
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" id="startCity" placeholder="Enter City Name">
           </div>
-          <div class="modal-content" id="location-box">
-            <div class="section has-background-light">
-              <h1>Enter Starting Location for Trip:</h1>
-              <div class="block"></div>
-                <textarea type="text" placeholder="City" id="startCity"></textarea>
-                <textarea type="text" placeholder="State" id="startState"></textarea>
-                <button class="button is-info is-outlined" id="updateBtn">Update Location</button>
-              </div>        
+          <div class="control">
+            <div class="select">
+              <select id="startState">
+                <option>Select State</option>
+                <option>AL</option>
+                <option>AK</option>
+                <option>AZ</option>
+                <option>CA</option>
+                <option>CO</option>
+                <option>CT</option>
+                <option>DE</option>
+                <option>FL</option>
+                <option>GA</option>
+                <option>ID</option>
+                <option>IL</option>
+                <option>IN</option>
+                <option>IA</option>
+                <option>KS</option>
+                <option>KY</option>
+                <option>LA</option>
+                <option>ME</option>
+                <option>MD</option>
+                <option>MA</option>
+                <option>MI</option>
+                <option>MN</option>
+                <option>MS</option>
+                <option>MO</option>
+                <option>MT</option>
+                <option>NE</option>
+                <option>NV</option>
+                <option>NH</option>
+                <option>NJ</option>
+                <option>NM</option>
+                <option>NY</option>
+                <option>NC</option>
+                <option>ND</option>
+                <option>OH</option>
+                <option>OK</option>
+                <option>OR</option>
+                <option>PA</option>
+                <option>RI</option>
+                <option>SC</option>
+                <option>SD</option>
+                <option>TN</option>
+                <option>TX</option>
+                <option>UT</option>
+                <option>VT</option>
+                <option>VA</option>
+                <option>WA</option>
+                <option>WV</option>
+                <option>WI</option>
+                <option>WY</option>
+              </select>
             </div>
-        </div>  
-      
-      
-     
-       <div class="section is-medium is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-dark" id="search-box">     
-          
-            
-            <input class="input is-info is-grouped" type="text" placeholder="Search by Activities, State, or Park Name" id="search-bar">
-            
-            <div class="is-flex is-flex-direction-row landing-page-btns">
-              <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal">
-                Location
-                </button> 
-             <button class= "button is-info is-outlined" id="submit-search">Search</button>
-            </div>
-            
-            <div class="section is-small is-flex is-justify-content-center is-align-items-center">
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)" id="recent1">
-              Recent Search 1
-              </button>
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)" id="recent2">
-              Recent Search 2
-              </button>
-              <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)" id="recent3">
-              Recent Search 3
-              </button>
-            </div>
+          </div>
         </div>
 
-       
+        <button class="button is-info is-outlined" id="updateBtn">Update Location</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal errorModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Invalid Input</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+      User input was invalid.
+      <ul>
+        <li>Make sure all inputs are filled.</li>
+        <li>Check to see that all location information is correct.</li>
+        <li>Try a different search term.</li>
+      </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="section is-medium is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-dark"
+    id="search-box">
+
+
+    <input class="input is-info is-grouped" type="text" placeholder="Search by Activities, State, or Park Name"
+      id="search-bar">
+
+    <div class="is-flex is-flex-direction-row m-1 landing-page-btns">
+      <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal">
+        Location
+      </button>
+      <button class="button is-info is-outlined" id="submit-search">Search</button>
+    </div>
+
+    <div class="section is-small is-flex is-justify-content-center is-align-items-center">
+      <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)" id="recent0"></button>
+      <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)" id="recent1"></button>
+      <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)" id="recent2"></button>
+    </div>
+  </div>
 
 
 
 
-        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-        <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-        <script src="./assets/bulma.js"></script>
-        <script src="./assets/landing.js"></script>
-    </body>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+  <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+  <script src="./assets/bulma.js"></script>
+  <script src="./assets/landing.js"></script>
+</body>
+
 </html>
