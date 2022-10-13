@@ -228,7 +228,7 @@ function displayParkDetails(findIndexOf) {
   // //appending park details to modal
 
   displayMap(userLocation, parkData.data[indexOfData].addresses[0].city + ", " + parkData.data[indexOfData].addresses[0].stateCode);
-  //getForecast(parkData.data[j].addresses[0].city + ", " + parkData.data[j].addresses[0].stateCode);
+  getForecast(parkData.data[indexOfData].addresses[0].city + ", " + parkData.data[indexOfData].addresses[0].stateCode);
 
   $("#park-name").text(parkData.data[indexOfData].fullName);
   $("#park-desc").text(parkData.data[indexOfData].description);
@@ -270,9 +270,11 @@ function updateWeather() {
 function generateWeatherCard() {
   // generate five cards with appropriate default text for filling with data
   var weatherSection = $("#weather");
+  weatherSection.css("margin-top","10px");
   for (let i = 0; i < 5; i++) {
     // for each card, generate the default text
     var myCard = $("<div>");
+    myCard.css({"border":"3px solid","border-radius":"10px", "margin":"10px"});
     myCard.addClass("column");
     myCard.attr("id", `day${i + 1}`);
     var myTemp = $("<p>");
