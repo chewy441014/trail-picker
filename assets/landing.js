@@ -18,39 +18,43 @@ function onLoad() {
   $('#updateBtn').on('click', updateUL);
   displayBackgroundImage();
   loadLocalStorage();
+  loadRecents();
 }
 
 function loadLocalStorage() {
 
-  if (JSON.parse(localStorage.getItem('userLocation')) === null || JSON.parse(localStorage.getItem('userLocation')) === undefined){
+   // if there exists some localstorage, assign the value of the search history to it
+    // if not, create an empty one
+  if (JSON.parse(localStorage.getItem('userLocation'))){
+    userLocation = JSON.parse(localStorage.getItem('userLocation'));
+  }
+  else{
     localStorage.setItem('userLocation', JSON.stringify(userLocation));
   }
 
-  else{
-    userLocation = JSON.parse(localStorage.getItem('userLocation'));
-  }
-
-
   if (JSON.parse(localStorage.getItem('userSearch'))) {
-    // if there exists some localstorage, assign the value of the search history to it
     userSearch = JSON.parse(localStorage.getItem('userSearch'));
-    
   } 
   else {
-    // if not, create an empty one
     localStorage.setItem('userSearch', JSON.stringify(userSearch));
   }
 
   if (JSON.parse(localStorage.getItem('recentSearches'))) {
-    // if there exists some localstorage, assign the value of the search history to it
     recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
-    
   } 
   else {
-    // if not, create an empty one
     localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
   }
 }
+
+// function loadRecents(userSearch.locations.length){
+//   i = 0
+//   for(var i = 0; i < recentSearches.locations.length; i++){
+//     // $('#recent'+i).text(recentSearches.searches[i],"in ",recentSearches.locations[i]);
+//     $("'#recent'+i").removeAttr('disabled');
+//     console.log('#recent'+ i);
+//   }
+// }
 
 // Validation for 
 
@@ -97,7 +101,16 @@ function displayBackgroundImage() {
 
 //Michael - Dynamic HTML generation for results Page 
 
+function catchBadInput(){
+  $('.errorModal').addClass('is-active')
+}
+
 function updateUS() {
+  if(userSearch = $('#search-bar').val() === "" || $('#startCity').val() === "" || $('#startState') === ""){
+    catchBadInput();
+    return null;
+  }
+
   userSearch = $('#search-bar').val();
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
 
@@ -117,13 +130,8 @@ function updateUS() {
 
     console.log(recentSearches);
   }
-
   localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
-
-
-
-
-  window.location.assign('./results_page.html');
+//   window.location.assign('./results_page.html');
 }
 
 function updateUL() {
