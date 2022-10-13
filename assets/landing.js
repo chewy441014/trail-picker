@@ -5,6 +5,7 @@ var recentSearches = {
   locations: [],
   searches: []
 };
+var i=0;
 
 onLoad();
 
@@ -18,7 +19,7 @@ function onLoad() {
   $('#updateBtn').on('click', updateUL);
   displayBackgroundImage();
   loadLocalStorage();
-  // loadRecents();
+  loadRecents();
 }
 
 function loadLocalStorage() {
@@ -47,16 +48,17 @@ function loadLocalStorage() {
   }
 }
 
-// function loadRecents(userSearch.locations.length){
-//   i = 0
-//   for(var i = 0; i < recentSearches.locations.length; i++){
-//     // $('#recent'+i).text(recentSearches.searches[i],"in ",recentSearches.locations[i]);
-//     $("'#recent'+i").removeAttr('disabled');
-//     console.log('#recent'+ i);
-//   }
-// }
+function loadRecents(){
+  
+  for(var i = 0; i < recentSearches.locations.length; i++){
 
-// Validation for 
+    $(`#recent${i}`).text(recentSearches.searches[i]+" in "+recentSearches.locations[i]);
+    $(`#recent${i}`).css('display','inline');
+    // console.log('#recent'+ i);
+  }
+}
+
+// Validation for user inputs
 
 function getLatLon(searchTerm, userSear) {
   console.log(searchTerm);
@@ -91,7 +93,7 @@ function findParksRelatedTo(searchTerm) {
       catchBadInput()
     } else {
       console.log("Park search ok")
-      window.location.assign('./results_page.html');
+      // window.location.assign('./results_page.html');
     }
   });
 }
@@ -105,7 +107,8 @@ function recentSearch(index) {
 
   localStorage.setItem('userSearch', JSON.stringify(userSearch));
   localStorage.setItem('userLocation', JSON.stringify(userLocation));
-  window.location.assign('./results_page.html');
+  
+  getLatLon(userLocation, userSearch);
 }
 
 // Michael - Random background image function
