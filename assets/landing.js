@@ -132,7 +132,7 @@ function recentSearch(index) {
   getLatLon(userLocation, userSearch);
 }
 
-// Michael - Random background image function
+// Random background image function
 function displayBackgroundImage() {
   var imageArr = [
     "./assets/images/background_images/big_prairie.jpg",
@@ -148,8 +148,7 @@ function displayBackgroundImage() {
   console.log(backgroundImage);
   $('body').css('background-image', 'url(' + backgroundImage + ')');
 }
-
-//Michael - Dynamic HTML generation for results Page 
+ 
 function catchBadInput() {
   $('.errorModal').addClass('is-active')
 }

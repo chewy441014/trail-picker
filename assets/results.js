@@ -149,7 +149,7 @@ function sortParkData(completeResponse) {
   }
 }
 
-// Michael - Random background image function
+// Random background image function
 function displayBackgroundImage() {
   var imageArr = [
     "./assets/images/background_images/big_prairie.jpg",
@@ -165,7 +165,7 @@ function displayBackgroundImage() {
   $('body').css('background-image', 'url(' + backgroundImage + ')');
 }
 
-//Michael - Dynamic HTML generation for results Page 
+// Dynamic HTML generation for results Page 
 function displayResults() {
   console.log(parkData);
   userSearch = JSON.parse(localStorage.getItem('userSearch'));
@@ -222,21 +222,8 @@ function updateWeather() {
   }
 }
 
-// generate the weather cards so that they look like: 
-/*
-<div class="column" id="day1">
-            <!-- // here is the weather data -->
-            <p>Temperature: <span id="temp1"></span></p>
-            <p>Wind: <span id="wind1"></span></p>
-            <p>Humidity: <span id="Humidity1"></span></p>
-            <p>Chance of Rain: <span id="Rain1"></span></p>
-            <p><span id= "Weathericon1"></span></p>
-            <p>Description: <span id="Description1"></span></p>
-            <p>Visibility : <span id="Visibility1"></span></p>
-          </div>
-*/
 function generateWeatherCard() {
-  // generate five cards with appropriate default text for filling with data
+// generate five cards with appropriate default text for filling with data  
   var weatherSection = $("#weather");
   weatherSection.css("margin-top","10px");
   for (let i = 0; i < 5; i++) {
