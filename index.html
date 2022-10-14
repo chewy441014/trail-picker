@@ -117,21 +117,18 @@
     </div>
   </div>
 
-  <div class="section is-small is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-light border"
-    id="search-box">
+  <div class="section is-small is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-light border" id="search-box">
 
 
     <input class="input is-info is-grouped" type="text" placeholder="Search by Activities, State, or Park Name"
       id="search-bar">
 
-    <div class="is-flex is-flex-direction-row m-1 landing-page-btns">
-      <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal" id="location-button">
-        Location
-      </button>
+    <div class="m-1 landing-page-btns">
+      <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal" id="location-button">Location</button>
       <button class="button is-info is-outlined" id="submit-search">Search</button>
     </div>
 
-    <div class="section is-small is-flex is-justify-content-center is-align-items-center">
+    <div class="section is-small is-flex is-justify-content-center is-align-items-center" id="recent-buttons">
       <button class="button is-info is-outlined mx-3" onclick="recentSearch(0)" id="recent0"></button>
       <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)" id="recent1"></button>
       <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)" id="recent2"></button>

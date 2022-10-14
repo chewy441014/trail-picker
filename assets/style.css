@@ -70,6 +70,11 @@ img {
     min-height: 100%;
 }
 
+.landing-page-btns{
+    display:flex;
+    flex-direction: row;
+}
+
 .modal-card {
     width: 75vw;
     border-radius: 25px;
@@ -82,7 +87,11 @@ img {
 }
 
 #submit-search{
-    width:100%
+    width:75%
+}
+
+#location-button{
+    width:25%
 }
 
 #map {
@@ -124,4 +133,30 @@ p#search-terms {
 #submit-search:hover, #location-button:hover, #recent0:hover, #recent1:hover, #recent2:hover, #updateBtn:hover {
     background-color: #3c4729;
     color: #E0A315
+}
+
+@media (max-width: 1020px) {
+   #recent-buttons{
+    flex-direction: column;
+    align-items: center;
+   }
+   #recent0, #recent1, #recent2 {
+    margin-bottom: 5px;
+    flex-basis: 20%;
+    width:260px;
+   }
+  }
+
+  @media (max-width: 800px) {
+    #submit-search{
+        width:100%;
+    }
+    
+    #location-button{
+        width:100%;
+    }
+    .landing-page-btns{
+        flex-direction: column;
+        align-items: center;
+    }
 }
