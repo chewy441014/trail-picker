@@ -187,3 +187,16 @@ function saveRotateSearch() {
 function updateUL() {
   userLocation = $('#startCity').val() + ', ' + $('#startState').val();
 }
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, (err) => err ? console.error(err) : console.info(`\nData written to json file`))
+  } else { 
+    console.error("Geolocation is not supported by this browser.")
+  }
+}
+
+function showPosition(position) {
+  console.log("Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude);
+}
