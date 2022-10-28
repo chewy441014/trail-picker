@@ -73,23 +73,23 @@ function getLatLon(searchTerm) {
       // Modal is opened to select location results from the api (for validation reasons)
       // create and add buttons for the first five elements of locationData if they exist
       var displayLength = Math.min(5, locationData.results.length)
-        
-        for (var i = 0; i < displayLength; i++) {
-          var newLi = $("<li>");
-          var newButton = $("<button>");
-          newButton.addClass("button is-info is-outlined");
-          newButton.on("click", changeLoc); // point to the function that starts the validation for the search term
-          newButton.text(locationData.results[0].locations[i].adminArea5 + ", " + locationData.results[0].locations[i].adminArea3);
-          newLi.append(newButton);
-          newButton.attr('id', `choice${i}`)
-          $('#button-container').append(newLi);
-        }
-        $('.validationModal').addClass('is-active');
+
+      for (var i = 0; i < displayLength; i++) {
+        var newLi = $("<li>");
+        var newButton = $("<button>");
+        newButton.addClass("button is-info is-outlined");
+        newButton.on("click", changeLoc); // point to the function that starts the validation for the search term
+        newButton.text(locationData.results[0].locations[i].adminArea5 + ", " + locationData.results[0].locations[i].adminArea3);
+        newLi.append(newButton);
+        newButton.attr('id', `choice${i}`)
+        $('#button-container').append(newLi);
+      }
+      $('.validationModal').addClass('is-active');
     }
   });
 }
 
-function changeLoc(e){
+function changeLoc(e) {
   // User presses buttons presented in the validation modal
   // text is pulled from the specific button that was pressed
   // text is saved over the user input location (is validated at this point)
@@ -156,14 +156,21 @@ function catchBadInput() {
 
 // function runs on search bar button input, starts validation and searches
 function updateUS() {
-  if (userSearch = $('#search-bar').val() === "" || $('#startCity').val() === "" || $('#startState') === "") {
+  if (userSearch = $('#search-bar').val() === "") {
     catchBadInput();
     return null;
   }
-  userSearch = $('#search-bar').val();
-  localStorage.setItem('userSearch', JSON.stringify(userSearch));
-  console.log('validating responses... ');
-  getLatLon(userLocation)
+
+  if ($('#startCity').val() === "") {
+    $('#location-modal').addClass('is-active')
+  }
+
+  else {
+    userSearch = $('#search-bar').val();
+    localStorage.setItem('userSearch', JSON.stringify(userSearch));
+    console.log('validating responses... ');
+    getLatLon(userLocation)
+  }
 }
 
 // saves the global variables to local storage, ensures only three searches are saved, deleting the oldest first
@@ -185,18 +192,22 @@ function saveRotateSearch() {
 
 // function runs on update location button click, saves the user location to a global variable, saved as local storage after validation
 function updateUL() {
+
+
+
+
   userLocation = $('#startCity').val() + ', ' + $('#startState').val();
 }
 
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, (err) => err ? console.error(err) : console.info(`\nData written to json file`))
-  } else { 
+  } else {
     console.error("Geolocation is not supported by this browser.")
   }
 }
 
 function showPosition(position) {
-  console.log("Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude);
+  console.log("Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude);
 }
