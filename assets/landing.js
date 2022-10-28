@@ -211,3 +211,60 @@ function showPosition(position) {
   console.log("Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude);
 }
+
+function tempfunc() {
+  // this function will get the autocomplete and do stuff
+  var autoComplete = $('#autocomplete').autocomplete({
+    minLength: 3,
+    delay: 300,
+    source: mapQuestAutoCompleteCall(request, responseCB)
+  });
+}
+
+function mapQuestAutoCompleteCall(request, responseCB) {
+  var searchTerm = request.term;
+  console.log(searchTerm);
+  var requestUrl = `https://www.mapquestapi.com/search/v3/prediction?key=Q87JNminvctmB5QAimcXQlzSf33AmhqY&collection=adminArea&q=${searchTerm}&countryCode=US`;
+  $.ajax({
+    url: requestUrl,
+    method: 'GET',
+  }).then(function (response) {
+    console.log(response);
+    var cityArr = response;
+    responseCB(cityArr.map((result) => { return { label: result.id, value: result.displayString } }))
+  });
+}
+
+/*
+"results": [
+    {
+      "collection": [
+        "adminArea"
+      ],
+      "displayString": "Denver, CO, United States",
+      "language": "en",
+      "id": "mqId:282041090",
+      "name": "Denver",
+      "place": {
+        "geometry": {
+          "coordinates": [
+            -104.99202,
+            39.74001
+          ],
+          "type": "Point"
+        },
+        "properties": {
+          "country": "United States",
+          "countryCode": "US",
+          "state": "Colorado",
+          "stateCode": "CO",
+          "county": "Denver",
+          "city": "Denver",
+          "type": "city"
+        },
+        "type": "Feature"
+      },
+      "recordType": "city",
+      "slug": "/us/co/denver"
+    }
+*/
