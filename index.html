@@ -14,78 +14,25 @@
 
 <body class="is-flex is-align-items-center is-justify-content-center is-vcentered">
 
-
   <div class="modal" id="location-modal">
-    <div class="modal-background">
-
-    </div>
+    <div class="modal-background"></div>
     <div class="modal-content" id="location-box">
       <div class="section has-background-light">
-        <h1>Enter Starting Location for Trip:</h1>
+        <h1 class="is-size-3">Starting Location</h1>
         <div class="block"></div>
-
+        <div class="is-flex is-align-items-center mb-3">
+          <label class="switch">
+            <input type="checkbox" id="currentLocation">
+            <span class="slider round"></span>
+          </label>
+          <label class="ml-1 pt is-size-5 mb-1">Use Current Location</label>
+        </div>
         <div class="field has-addons">
-          <div class="control">
-            <input class="input" type="text" id="startCity" placeholder="Enter City Name">
-          </div>
-          <div class="control">
-            <div class="select">
-              <select id="startState">
-                <option>Select State</option>
-                <option>AL</option>
-                <option>AK</option>
-                <option>AZ</option>
-                <option>CA</option>
-                <option>CO</option>
-                <option>CT</option>
-                <option>DE</option>
-                <option>FL</option>
-                <option>GA</option>
-                <option>ID</option>
-                <option>IL</option>
-                <option>IN</option>
-                <option>IA</option>
-                <option>KS</option>
-                <option>KY</option>
-                <option>LA</option>
-                <option>ME</option>
-                <option>MD</option>
-                <option>MA</option>
-                <option>MI</option>
-                <option>MN</option>
-                <option>MS</option>
-                <option>MO</option>
-                <option>MT</option>
-                <option>NE</option>
-                <option>NV</option>
-                <option>NH</option>
-                <option>NJ</option>
-                <option>NM</option>
-                <option>NY</option>
-                <option>NC</option>
-                <option>ND</option>
-                <option>OH</option>
-                <option>OK</option>
-                <option>OR</option>
-                <option>PA</option>
-                <option>RI</option>
-                <option>SC</option>
-                <option>SD</option>
-                <option>TN</option>
-                <option>TX</option>
-                <option>UT</option>
-                <option>VT</option>
-                <option>VA</option>
-                <option>WA</option>
-                <option>WV</option>
-                <option>WI</option>
-                <option>WY</option>
-              </select>
-            </div>
-          </div>
+          <input class="input" type="text" id="startCity" placeholder="Enter City Name">
+          <button class="button is-info is-outlined" id="updateBtn">Update Location</button>
         </div>
 
-        <button class="button is-info is-outlined" id="updateBtn">Update Location</button>
+
       </div>
     </div>
   </div>
@@ -98,7 +45,8 @@
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        User input was invalid. Please make sure to add your location, or make sure to search for an activity at one of the national parks. 
+        User input was invalid. Please make sure to add your location, or make sure to search for an activity at one of
+        the national parks.
       </section>
     </div>
   </div>
@@ -117,14 +65,16 @@
     </div>
   </div>
 
-  <div class="section is-small is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-light border" id="search-box">
+  <button class="js-modal-trigger button is-info is-outlined " data-target="location-modal"
+    id="location-button">Location</button>
 
+  <div
+    class="section is-small is-flex is-flex-direction-column is-align-items-center mt-6 mb-4 has-background-light border"
+    id="search-box">
 
-    <input class="input is-info is-grouped" type="text" placeholder="Search by Activities, State, or Park Name"
-      id="search-bar">
-
-    <div class="m-1 landing-page-btns">
-      <button class="js-modal-trigger button is-info is-outlined" data-target="location-modal" id="location-button">Location</button>
+    <div class="field has-addons column is-full">
+      <input class="input column is-three-quarters" type="text" placeholder="Search by Activities, State, or Park Name"
+        id="search-bar">
       <button class="button is-info is-outlined" id="submit-search">Search</button>
     </div>
 
@@ -133,8 +83,6 @@
       <button class="button is-info is-outlined mx-3" onclick="recentSearch(1)" id="recent1"></button>
       <button class="button is-info is-outlined mx-3" onclick="recentSearch(2)" id="recent2"></button>
     </div>
-
-    <button class="button is-info is-outlined mx-3" onclick="getLocation()" id="demo">Get Location</button>
   </div>
 
 
